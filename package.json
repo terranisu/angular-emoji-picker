@@ -1,0 +1,27 @@
+{
+  "name": "angular-emoji-picker",
+  "version": "0.0.1",
+  "description": "AngularJS Emoji picker",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vadim Kadnikov <terranisu@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-cssmin": "^0.12.2",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "optionalDependencies": {
+    "karma": "^0.12.31",
+    "karma-mocha": "^0.1.10",
+    "karma-sinon-chai": "^0.3.0",
+    "mocha": "^2.1.0",
+    "phantomjs": "^1.9.15",
+    "karma-phantomjs-launcher": "^0.1.4"
+  }
+}

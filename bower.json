@@ -1,0 +1,45 @@
+{
+  "name": "angular-emoji-picker",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Vadim Kadnikov",
+      "homepage": "https://github.com/terranisu"
+    }
+  ],
+  "description": "AngularJS Emoji picker",
+  "main": [],
+  "dependencies": {
+    "angular": "1.3.x",
+    "angular-sanitize": "1.3.x",
+    "angular-mocks": "1.3.x"
+  },
+  "devDependencies": {
+    "bootstrap": "3.x",
+    "angular-ui-bootstrap-bower": "0.12.x",
+    "angular-strap": "2.x"
+  },
+  "keywords": [
+    "angular",
+    "angularjs",
+    "emoji",
+    "picker",
+    "selector"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/terranisu/angular-emoji-picker",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/terranisu/angular-emoji-picker.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "resolutions": {
+    "angular": "1.3.x"
+  }
+}

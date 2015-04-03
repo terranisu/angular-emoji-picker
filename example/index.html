@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AngularJs Emoji Picker</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/css/emoji-picker.css">
+  </head>
+  <body ng-app="vkEmojiPicker" ng-controller="EmojiController">
+    <pre ng-bind-html="message | emojify"></pre>
+    <div class="input-group">
+      <span class="input-group-addon" emoji-picker="message" emoji-placement="bottom" emoji-title="Click on Emoji"></span>
+      <input class="form-control" ng-model="message">
+    </div>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <!--<script type="text/javascript" src="../bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>-->
+    <script src="../bower_components/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="../bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="../dist/js/emoji-picker.js"></script>
+  </body>
+</html>
