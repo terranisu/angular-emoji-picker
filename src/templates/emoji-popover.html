@@ -1,0 +1,16 @@
+<div class="emoji-popover" tabindex="-1">
+  <h3 class="emoji-popover-title" ng-bind-html="title" ng-show="title"></h3>
+  <div class="emoji-popover-content">
+    <div class="emoji-container">
+      <div class="emoji-groups">
+        <i class="emoji-group {{ ::group.icon.name }}"
+           ng-class="(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : ''"
+           ng-repeat="group in ::groups" ng-click="changeGroup(group)"></i>
+        <div class="pull-right close-button-holder">
+          <button type="button" class="close" ng-click="$hide()">&times;</button>
+        </div>
+      </div>
+      <i class="emoji-picker emoji-{{ ::toClassName(emoji) }}" ng-repeat="emoji in selectedGroup.emoji" ng-click="append(emoji)"></i>
+    </div>
+  </div>
+</div>

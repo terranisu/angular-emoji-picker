@@ -62,6 +62,7 @@ module.exports = function (grunt) {
           'Gruntfile.js',
           'src/css/**/*.css',
           'src/js/**/*.js',
+          'src/templates/**/*.html',
           'example/index.html'
         ],
         tasks: ['install'],
