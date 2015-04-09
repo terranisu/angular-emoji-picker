@@ -1,7 +1,8 @@
 angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
   var defaultSettings = {
     title: '',
-    placement: 'top'
+    placement: 'top',
+    template: 'src/templates/emoji-popover.html'
   };
 
   this.$get = [
@@ -17,45 +18,120 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
             options = angular.extend({}, defaultSettings, config),
             scope = $popover.$scope = options.scope && options.scope.$new() || $rootScope.$new();
 
-        $popover.$promise = fetchTemplate(options.template);
+        // Private functions
+
+        var loadTemplate = function (template) {
+          if (fetchPromises[template]) {
+            return fetchPromises[template];
+          }
+
+          return (fetchPromises[template] = $http.get(template, { cache: $templateCache }).then(function (response) {
+            return response.data;
+          }));
+        };
+
+        var applyPlacement = function (parentElement, popoverElement) {
+          var elem = parentElement[0];
+          var clientRect = elem.getBoundingClientRect();
+          var popoverWidth = popoverElement.prop('offsetWidth');
+          var popoverHeight = popoverElement.prop('offsetHeight');
+          var offset = getPopoverOffset(options.placement, clientRect, popoverWidth, popoverHeight);
+
+          popoverElement.css({
+            top: offset.top + 'px',
+            left: offset.left + 'px'
+          });
+        };
+
+        var getPopoverOffset = function (placement, position, popoverWidth, popoverHeight) {
+          var offset;
+
+          switch (placement) {
+            case 'right':
+              offset = {
+                top: 0,
+                left: position.left + position.width
+              };
+              break;
+            case 'bottom':
+              offset = {
+                top: position.height,
+                left: 0
+              };
+              break;
+            case 'left':
+              offset = {
+                top: 0,
+                left: position.left - popoverWidth
+              };
+              break;
+            default:
+              offset = {
+                top: 0 - popoverHeight,
+                left: 0
+              };
+              break;
+          }
+
+          return offset;
+        };
+
+        var destroyPopoverElement = function (scope, element) {
+          if (scope) {
+            scope.$destroy();
+            scope = null;
+          }
+
+          if (element) {
+            element.remove();
+            element = null;
+          }
+        };
+
+        // Public scope interface
 
         if (options.title) {
           scope.title = $sce.trustAsHtml(options.title);
         }
 
         scope.$hide = function() {
-          scope.$$postDigest(function() {
-            $popover.hide();
-          });
+          $popover.hide();
         };
 
+        // Public popover interface
+
         $popover.$isShown = false;
+        $popover.$promise = loadTemplate(options.template);
+        $popover.$promise.then(function (template) {
+          if (angular.isObject(template)) {
+            template = template.data;
+          }
+
+          popoverTemplate = template;
+          popoverLinker = $compile(template);
+          element.on('click', $popover.toggle);
+        });
 
         $popover.show = function() {
           if ($popover.$isShown) {
             return;
           }
 
-          var parent = null, after = element;
-
           // Hide any existing popoverElement
-          if (popoverElement) {
-            destroyPopoverElement();
+          if (popoverScope && popoverElement) {
+            destroyPopoverElement(popoverScope, popoverElement);
           }
 
           // Fetch a cloned element linked from template
           popoverScope = $popover.$scope.$new();
           popoverElement = popoverLinker(popoverScope, function (clonedElement, scope) {});
 
-          //// Set the initial positioning.  Make the tooltip invisible
-          //// so IE doesn't try to focus on it off screen.
-          //tipElement.css({top: '-9999px', left: '-9999px', display: 'block', visibility: 'hidden'});
-
-          after ? after.after(popoverElement) : parent.prepend(popoverElement);
+          element.after(popoverElement);
           $popover.$isShown = true;
           scope.$digest();
 
           popoverElement.addClass(options.placement);
+          applyPlacement(element, popoverElement);
         };
 
         $popover.hide = function () {
@@ -63,7 +139,7 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
             return;
           }
 
-          destroyPopoverElement();
+          destroyPopoverElement(popoverScope, popoverElement);
           $popover.$isShown = false;
         };
 
@@ -73,44 +149,9 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
 
         $popover.destroy = function() {
           element.off('click', $popover.toggle);
-          // Remove element
-          destroyPopoverElement();
-          // Destroy scope
+          destroyPopoverElement(popoverScope, popoverElement);
           scope.$destroy();
         };
-
-        $popover.$promise.then(function (template) {
-          if (angular.isObject(template)) {
-            template = template.data;
-          }
-          //if(options.html) template = template.replace(htmlReplaceRegExp, 'ng-bind-html="');
-          //template = trim.apply(template);
-          popoverTemplate = template;
-          popoverLinker = $compile(template);
-          element.on('click', $popover.toggle);
-        });
-
-        function fetchTemplate(template) {
-          if (fetchPromises[template]) {
-            return fetchPromises[template];
-          }
-
-          return (fetchPromises[template] = $http.get(template, { cache: $templateCache }).then(function (response) {
-            return response.data;
-          }));
-        }
-
-        function destroyPopoverElement() {
-          if (popoverScope) {
-            popoverScope.$destroy();
-            popoverScope = null;
-          }
-
-          if (popoverElement) {
-            popoverElement.remove();
-            popoverElement = null;
-          }
-        }
 
         return $popover;
       }

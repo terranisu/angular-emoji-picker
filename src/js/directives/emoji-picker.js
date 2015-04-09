@@ -6,7 +6,6 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
     } catch(e) {
       try {
         angular.module('mgcrea.ngStrap.popover');
-        console.log('here');
         var templateUrl = 'template/emoji-picker/button-strap.html';
       } catch(e) {
         var templateUrl = '../src/templates/emoji-button.html';
