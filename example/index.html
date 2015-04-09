@@ -9,7 +9,7 @@
   <body ng-app="vkEmojiExample" ng-controller="EmojiController">
     <pre ng-bind-html="message | emojify"></pre>
     <div class="input-group">
-      <span class="input-group-addon" emoji-picker="message" emoji-placement="right" emoji-title="Emoji"></span>
+      <span class="input-group-addon" emoji-picker="message" placement="right" title="Emoji" recent-limit="12"></span>
       <input class="form-control" ng-model="message">
     </div>
     <script src="../bower_components/angular/angular.min.js"></script>

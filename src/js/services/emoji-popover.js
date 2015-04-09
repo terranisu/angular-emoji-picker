@@ -94,6 +94,8 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
           scope.title = $sce.trustAsHtml(options.title);
         }
 
+        scope.placement = options.placement;
+
         scope.$hide = function() {
           $popover.hide();
         };

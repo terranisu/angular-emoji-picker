@@ -1,5 +1,7 @@
 angular.module('vkEmojiPicker').directive('emojiPicker', [
-  'EmojiGroups', function (emojiGroups) {
+  'EmojiGroups', 'vkEmojiStorage', function (emojiGroups, storage) {
+    var RECENT_LIMIT = 36;
+
     try {
       angular.module('ui.bootstrap.popover');
       var templateUrl = 'template/emoji-picker/button-bootstrap.html';
@@ -12,25 +14,24 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
       }
     }
 
-    //var storeEmoji = function (emoji) {
-    //
-    //};
-
-
     return {
       restrict: 'A',
       templateUrl: templateUrl,
       scope: {
         model: '=emojiPicker',
-        placement: '@emojiPlacement',
-        title: '@emojiTitle'
+        placement: '@placement',
+        title: '@title'
       },
-      link: function($scope) {
+      link: function($scope, element, attrs) {
+        var recentLimit = parseInt(attrs.recentLimit, 10) || RECENT_LIMIT;
+
         $scope.groups = emojiGroups.groups;
         $scope.selectedGroup = emojiGroups.groups[0];
+        $scope.selectedGroup.emoji = storage.getFirst(recentLimit);
 
         $scope.append = function (emoji) {
           $scope.model += [' :', emoji, ':'].join('');
+          storage.store(emoji);
         };
 
         $scope.toClassName = function (emoji) {
@@ -39,6 +40,10 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
 
         $scope.changeGroup = function (group) {
           $scope.selectedGroup = group;
+
+          if ($scope.selectedGroup.name === 'recent') {
+            $scope.selectedGroup.emoji = storage.getFirst(recentLimit);
+          }
         }
       }
     };

@@ -81,12 +81,6 @@
     border-bottom: 1px solid #ebebeb;
     border-radius: 5px 5px 0 0;
   }
-  /*.emoji-popover .emoji-popover-title {*/
-    /*padding: 5px;*/
-    /*background:#f5f5f5;*/
-    /*margin: 0 0 3px;*/
-    /*font-size: 14px;*/
-  /*}*/
   .emoji-popover .emoji-popover-content {
     padding: 9px 14px;
   }
