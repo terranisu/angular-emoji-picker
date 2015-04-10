@@ -1,6 +1,8 @@
 angular.module('vkEmojiPicker').factory('vkEmojiLocalStorage', function () {
-  var factory = { length: 0 },
-      storage = {};
+  var factory = {
+    length: 0
+  };
+  var storage = {};
 
   var countLength = function (storageObject) {
     var length = 0;

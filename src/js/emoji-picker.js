@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('vkEmojiPicker', ['ngSanitize']).run([
-  '$templateCache', function ($templateCache) {
-    //$templateCache.put('template/emoji-picker/button-emoji.html',
+  '$templateCache', function($templateCache) {
+    // $templateCache.put('template/emoji-picker/button-emoji.html',
     //
-    //);
+    // );
     //
     //$templateCache.put('template/emoji-picker/popover-emoji.html',
     //  '<div class="emoji-popover" tabindex="-1">' +
