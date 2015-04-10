@@ -1,22 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="vkEmojiExample">
   <head>
     <meta charset="utf-8">
-    <title>AngularJs Emoji Picker</title>
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <meta name="viewport" content="initial-scale=1">
+    <title>AngularJS Emoji Picker</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="../dist/css/emoji-picker.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
-  <body ng-app="vkEmojiExample" ng-controller="EmojiController">
-    <pre ng-bind-html="message | emojify"></pre>
-    <div class="input-group">
-      <span class="input-group-addon" emoji-picker="message" placement="right" title="Emoji" recent-limit="12"></span>
-      <input class="form-control" ng-model="message">
+  <body layout="column" ng-controller="EmojiController">
+    <md-toolbar layout="row">
+      <h1 class="md-toolbar-tools" layout-align-gt-sm="center">Angular Emoji Picker</h1>
+    </md-toolbar>
+    <div layout="row" flex>
+      <div layout="column" flex id="content">
+        <md-content layout="column" flex class="md-padding">
+          <form name="blogPost">
+            <md-input-container>
+              <label>Author</label>
+              <input md-maxlength="30" required name="author" ng-model="post.author">
+              <div ng-messages="blogPost.author.$error">
+                <div ng-message="required">This is required.</div>
+                <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+              </div>
+            </md-input-container>
+            <md-input-container>
+              <label>Title</label>
+              <input md-maxlength="50" required name="title" ng-model="post.title">
+              <div ng-messages="blogPost.title.$error">
+                <div ng-message="required">This is required.</div>
+                <div ng-message="md-maxlength">Wow! Wow! Calm down. Why so much letters?</div>
+              </div>
+            </md-input-container>
+            <md-input-container>
+              <label>Message</label>
+              <textarea md-maxlength="150" required ng-model="post.message" columns="1"></textarea>
+              <div ng-messages="blogPost.rate.$error">
+                <div ng-message="required">Hey, write something</div>
+                <div ng-message="md-maxlength">So much to read, man</div>
+              </div>
+            </md-input-container>
+            <md-whiteframe class="md-whiteframe-z1" layout="row" layout-margin layout-align="center center">
+              <div flex ng-bind-html="post.message | emojify"></div>
+              <div flex ng-bind-html="post.message | hexify"></div>
+            </md-whiteframe>
+            <section layout="row" layout-sm="row" layout-margin layout-align="center center">
+              <md-button class="md-raised md-default">Post</md-button>
+              <span emoji-picker="post.message" placement="left" title="Emoji" recent-limit="12"></span>
+            </section>
+          </form>
+        </md-content>
+      </div>
     </div>
     <script src="../bower_components/angular/angular.min.js"></script>
     <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-    <!--<script type="text/javascript" src="../bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>-->
-    <!--<script src="../bower_components/angular-strap/dist/angular-strap.min.js"></script>-->
-    <!--<script src="../bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>-->
+    <script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="../bower_components/angular-material/angular-material.min.js"></script>
     <script src="../dist/js/emoji-picker.js"></script>
     <script src="js/app.js"></script>
   </body>

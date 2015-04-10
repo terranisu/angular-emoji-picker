@@ -24,9 +24,6 @@
   .emoji-container::-webkit-scrollbar {
     width: 10px;
   }
-  /*.emoji-container::-webkit-scrollbar-button {*/
-    /*background: #ccc;*/
-  /*}*/
   .emoji-container::-webkit-scrollbar-track-piece {
     background: #f5f5f5;
   }
@@ -35,8 +32,16 @@
     border: 1px solid #b3b3b3;
   }
   .emoji-container .close-button-holder {
-    margin: 5px 10px 0;
+    margin-right: 10px;
+    float: right;
   }
+    .emoji-container .close-button-holder .close-button {
+      display: inline-block;
+      height: 29px;
+      cursor: pointer;
+      font-size: 26px;
+      color: #b3b3b3;
+    }
 
 .emoji-popover {
   position: absolute;

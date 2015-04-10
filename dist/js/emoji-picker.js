@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('vkEmojiPicker', ['ngSanitize']).run([
-  '$templateCache', function ($templateCache) {
-    //$templateCache.put('template/emoji-picker/button-emoji.html',
+  '$templateCache', function($templateCache) {
+    // $templateCache.put('template/emoji-picker/button-emoji.html',
     //
-    //);
+    // );
     //
     //$templateCache.put('template/emoji-picker/popover-emoji.html',
     //  '<div class="emoji-popover" tabindex="-1">' +
@@ -1385,8 +1385,10 @@ angular.module('vkEmojiPicker').filter('hexify', [
 ]);
 
 angular.module('vkEmojiPicker').factory('vkEmojiLocalStorage', function () {
-  var factory = { length: 0 },
-      storage = {};
+  var factory = {
+    length: 0
+  };
+  var storage = {};
 
   var countLength = function (storageObject) {
     var length = 0;

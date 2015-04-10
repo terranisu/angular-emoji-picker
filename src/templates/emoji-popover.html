@@ -7,7 +7,7 @@
            ng-class="(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : ''"
            ng-repeat="group in ::groups" ng-click="changeGroup(group)"></i>
         <div class="pull-right close-button-holder">
-          <button type="button" class="close" ng-click="$hide()">&times;</button>
+          <i class="close-button" ng-click="$hide()">&times;</i>
         </div>
       </div>
       <i class="emoji-picker emoji-{{ ::toClassName(emoji) }}" ng-repeat="emoji in selectedGroup.emoji" ng-click="append(emoji)"></i>

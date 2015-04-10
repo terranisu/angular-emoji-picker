@@ -1,11 +1,16 @@
 'use strict';
 
 angular.module('vkEmojiExample', [
-  'vkEmojiPicker',
-  //'mgcrea.ngStrap',
-  //'ui.bootstrap'
+  'ngMaterial',
+  'ngMessages',
+  'vkEmojiPicker'
 ]).controller('EmojiController', [
   '$scope', function ($scope) {
-    $scope.message = 'this is a test message :smile: :+1: :trollface:';
+    $scope.post = {
+      author: '',
+      title: '',
+      message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit... ' +
+               'What else do you expect from me? :trollface: :+1:'
+    };
   }
 ]);
