@@ -1485,26 +1485,26 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
           switch (placement) {
             case 'right':
               offset = {
-                top: 0,
+                top: position.top - popoverHeight / 4,
                 left: position.left + position.width
               };
               break;
             case 'bottom':
               offset = {
-                top: position.height,
-                left: 0
+                top: position.top - position.height * 2,
+                left: position.left
               };
               break;
             case 'left':
               offset = {
-                top: 0,
+                top: position.top - popoverHeight / 4,
                 left: position.left - popoverWidth
               };
               break;
             default:
               offset = {
-                top: 0 - popoverHeight,
-                left: 0
+                top: position.top - popoverHeight - position.height * 3,
+                left: position.left
               };
               break;
           }

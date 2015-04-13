@@ -51,7 +51,7 @@ module.exports = function (grunt) {
           'dist/js/emoji-picker.min.js': ['dist/js/emoji-picker.js']
         },
         options: {
-          mangle: false // prevent changes to your variable and function names.
+          mangle: true // false: prevent changes to your variable and function names.
         }
       }
     },
@@ -67,7 +67,8 @@ module.exports = function (grunt) {
         ],
         tasks: ['install'],
         options: {
-          atBegin: true
+          atBegin: true,
+          livereload: true
         }
       }
     }
