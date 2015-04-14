@@ -1,7 +1,3 @@
-/**
- * Created by v.kadnikov on 05.03.2015.
- */
-
 describe('vkEmojiLocalStorage', function () {
   var storage;
 

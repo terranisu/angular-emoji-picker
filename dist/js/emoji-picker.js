@@ -1601,43 +1601,38 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
 
 angular.module('vkEmojiPicker').factory('vkEmojiStorage', [
   '$window', 'vkEmojiLocalStorage', function ($window, emojiStorage) {
-    var factory = {},
-        storage = $window.localStorage || emojiStorage;
+    var factory = {};
+    var storage = $window.localStorage || emojiStorage;
 
     factory.store = function (value) {
       var emojiString = storage.getItem('emojiPicker');
 
       if (emojiString == null) {
-        var emojiObject = {};
+        var emojiArray = [];
       } else {
-        var emojiObject = JSON.parse(emojiString);
+        var emojiArray = JSON.parse(emojiString);
+        var emojiIndex = emojiArray.indexOf(value);
+
+        if (emojiIndex >= 0) {
+          emojiArray.splice(emojiIndex, 1);
+        }
       }
 
-      emojiObject[value] = value;
-      storage.setItem('emojiPicker', JSON.stringify(emojiObject));
+      emojiArray.unshift(value);
+      storage.setItem('emojiPicker', JSON.stringify(emojiArray));
     };
 
     factory.getFirst = function (count) {
-      var length = 0,
-          emoji = [],
-          emojiString = storage.getItem('emojiPicker');
+      var count = count || 1;
+      var emojiString = storage.getItem('emojiPicker');
 
       if (emojiString == null) {
-        return emoji;
+        return [];
       }
 
-      var emojiObject = JSON.parse(emojiString);
+      var emojiArray = JSON.parse(emojiString);
 
-      angular.forEach(emojiObject, function (value) {
-        if (length === count) {
-          return;
-        }
-
-        emoji.push(value);
-        length += 1;
-      });
-
-      return emoji;
+      return emojiArray.slice(0, count);
     };
 
     factory.clear = function () {
