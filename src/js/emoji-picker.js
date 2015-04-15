@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('vkEmojiPicker', ['ngSanitize']).run([
+angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).run([
   '$templateCache', function ($templateCache) {
     // $templateCache.put('template/emoji-picker/button-emoji.html',
     //
@@ -39,14 +39,14 @@ angular.module('vkEmojiPicker', ['ngSanitize']).run([
     //  '<i class="smiley-{{smiley}}" ng-repeat="smiley in smilies" ng-click="append(smiley)"></i>'+
     //  '</div>'
     // );
-    $templateCache.put('template/emoji-picker/button-strap.html',
+    $templateCache.put('templates/emoji-button-strap.html',
       '<i class="emoji-picker emoji-smile" bs-popover ' +
       'data-template="template/emoji-picker/popover-strap.html" ' +
       'data-placement="{{ !placement && \'left\' || placement }}" ' +
       'title="{{ title }}"></i>'
     );
 
-    $templateCache.put('template/emoji-picker/popover-strap.html',
+    $templateCache.put('templates/emoji-popover-strap.html',
       '<div class="popover" tabindex="-1">' +
         '<div class="arrow"></div>' +
         '<h3 class="popover-title" ng-bind-html="title" ng-show="title"></h3>' +

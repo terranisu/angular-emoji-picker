@@ -1,6 +1,35 @@
+angular.module('templates-dist', ['templates/emoji-button.html', 'templates/emoji-popover.html']);
+
+angular.module("templates/emoji-button.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/emoji-button.html",
+    "<i class=\"emoji-picker emoji-smile\" emoji-popover template=\"templates/emoji-popover.html\" placement=\"{{ ::placement }}\" title=\"{{ ::title }}\"></i>\n" +
+    "");
+}]);
+
+angular.module("templates/emoji-popover.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("templates/emoji-popover.html",
+    "<div class=\"emoji-popover\" tabindex=\"-1\">\n" +
+    "  <h3 class=\"emoji-popover-title\" ng-bind-html=\"title\" ng-show=\"title\"></h3>\n" +
+    "  <div class=\"emoji-popover-content\">\n" +
+    "    <div class=\"emoji-container\">\n" +
+    "      <div class=\"emoji-groups\">\n" +
+    "        <i class=\"emoji-group {{ ::group.icon.name }}\"\n" +
+    "           ng-class=\"(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : ''\"\n" +
+    "           ng-repeat=\"group in ::groups\" ng-click=\"changeGroup(group)\"></i>\n" +
+    "        <div class=\"pull-right close-button-holder\">\n" +
+    "          <i class=\"close-button\" ng-click=\"$hide()\">&times;</i>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "      <i class=\"emoji-picker emoji-{{ ::toClassName(emoji) }}\" ng-repeat=\"emoji in selectedGroup.emoji\" ng-click=\"append(emoji)\"></i>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "</div>\n" +
+    "");
+}]);
+
 'use strict';
 
-angular.module('vkEmojiPicker', ['ngSanitize']).run([
+angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).run([
   '$templateCache', function ($templateCache) {
     // $templateCache.put('template/emoji-picker/button-emoji.html',
     //
@@ -39,14 +68,14 @@ angular.module('vkEmojiPicker', ['ngSanitize']).run([
     //  '<i class="smiley-{{smiley}}" ng-repeat="smiley in smilies" ng-click="append(smiley)"></i>'+
     //  '</div>'
     // );
-    $templateCache.put('template/emoji-picker/button-strap.html',
+    $templateCache.put('templates/emoji-button-strap.html',
       '<i class="emoji-picker emoji-smile" bs-popover ' +
       'data-template="template/emoji-picker/popover-strap.html" ' +
       'data-placement="{{ !placement && \'left\' || placement }}" ' +
       'title="{{ title }}"></i>'
     );
 
-    $templateCache.put('template/emoji-picker/popover-strap.html',
+    $templateCache.put('templates/emoji-popover-strap.html',
       '<div class="popover" tabindex="-1">' +
         '<div class="arrow"></div>' +
         '<h3 class="popover-title" ng-bind-html="title" ng-show="title"></h3>' +
@@ -1265,16 +1294,16 @@ angular.module('vkEmojiPicker').constant('EmojiHex', (function () {
 angular.module('vkEmojiPicker').directive('emojiPicker', [
   'EmojiGroups', 'vkEmojiStorage', function (emojiGroups, storage) {
     var RECENT_LIMIT = 36;
-    var templateUrl = 'template/emoji-picker/button-bootstrap.html';
+    var templateUrl = 'templates/emoji-button-bootstrap.html';
 
     try {
       angular.module('ui.bootstrap.popover');
     } catch (e) {
       try {
         angular.module('mgcrea.ngStrap.popover');
-        templateUrl = 'template/emoji-picker/button-strap.html';
+        templateUrl = 'templates/emoji-button-strap.html';
       } catch (e) {
-        templateUrl = '../src/templates/emoji-button.html';
+        templateUrl = 'templates/emoji-button.html';
       }
     }
 
@@ -1325,7 +1354,7 @@ angular.module('vkEmojiPicker').directive('emojiPopover', [
 
         config.title = attrs.title || '';
         config.placement = attrs.placement || 'top';
-        config.template = attrs.template || 'src/templates/emoji-popover.html';
+        config.template = attrs.template || 'templates/emoji-popover.html';
 
         var popover = $emojiPopover(element, config);
 
@@ -1339,7 +1368,8 @@ angular.module('vkEmojiPicker').directive('emojiPopover', [
         });
       }
     };
-  }]);
+  }
+]);
 
 angular.module('vkEmojiPicker').filter('emojify', [
   'EmojiGroups', function (emojiGroups) {

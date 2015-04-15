@@ -1,16 +1,16 @@
 angular.module('vkEmojiPicker').directive('emojiPicker', [
   'EmojiGroups', 'vkEmojiStorage', function (emojiGroups, storage) {
     var RECENT_LIMIT = 36;
-    var templateUrl = 'template/emoji-picker/button-bootstrap.html';
+    var templateUrl = 'templates/emoji-button-bootstrap.html';
 
     try {
       angular.module('ui.bootstrap.popover');
     } catch (e) {
       try {
         angular.module('mgcrea.ngStrap.popover');
-        templateUrl = 'template/emoji-picker/button-strap.html';
+        templateUrl = 'templates/emoji-button-strap.html';
       } catch (e) {
-        templateUrl = '../src/templates/emoji-button.html';
+        templateUrl = 'templates/emoji-button.html';
       }
     }
 

@@ -9,7 +9,7 @@ angular.module('vkEmojiPicker').directive('emojiPopover', [
 
         config.title = attrs.title || '';
         config.placement = attrs.placement || 'top';
-        config.template = attrs.template || 'src/templates/emoji-popover.html';
+        config.template = attrs.template || 'templates/emoji-popover.html';
 
         var popover = $emojiPopover(element, config);
 
@@ -23,4 +23,5 @@ angular.module('vkEmojiPicker').directive('emojiPopover', [
         });
       }
     };
-  }]);
+  }
+]);

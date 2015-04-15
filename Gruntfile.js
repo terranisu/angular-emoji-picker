@@ -2,12 +2,26 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    clean: {
+      temp: {
+        src: ['tmp']
+      }
+    },
+
+    html2js: {
+      dist: {
+        src: ['src/templates/**/*.html'],
+        dest: 'tmp/templates.js'
+      }
+    },
+
     concat: {
       options: {
         separator: '\n'
       },
       dist: {
         src: [
+          'tmp/templates.js',
           'src/js/*.js',
           'src/js/**/*.js'
         ],
@@ -79,12 +93,16 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-html2js');
 
   grunt.registerTask('install', [
+    'html2js',
     'concat',
     'copy',
     'cssmin',
-    'uglify'
+    'uglify',
+    'clean'
   ]);
 
   grunt.registerTask('default', ['watch:dev']);
