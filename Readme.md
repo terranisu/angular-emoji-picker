@@ -1,9 +1,8 @@
 AngularJS Emoji Picker
 ======================
 
-AngularJS Emoji Picker is a simple emoji picker for your web forms. This project heavily inspired by
-[Angular Emoji](https://github.com/Coraza/angular-emoji-popup/), but it doesn't require external dependencies
-like JQuery, etc.
+AngularJS Emoji Picker is a simple AngularJs module which allows you to add emoji images to your model value. This project is heavily inspired by
+[Angular Emoji](https://github.com/Coraza/angular-emoji-popup/), but it doesn't require external dependencies like JQuery, JQuery plugins and so forth.
 
 Installation
 ------------
@@ -22,26 +21,52 @@ You can also just download the contents of the `dist/` folder and add dependenci
 
 Usage
 -----
-
 ```javascript
 angular.module('myModule', ['vkEmojiPicker']);
 ```
+By default Emoji Picker uses its own popover, which, to be honest, has not a very great realization. But you have an option - you can use
+external dependencies: [Angular Strap](https://github.com/mgcrea/angular-strap) and [Bootstrap](https://github.com/twbs/bootstrap). In that
+case you have to include additional scripts on your page:
+
+```html
+<link rel="stylesheet" href="/path/to/bootstrap/dist/css/bootstrap.min.css">
+<script src="/path/to/angular-strap/dist/angular-strap.min.js"></script>
+<script src="/path/to/angular-strap/dist/angular-strap.tpl.min.js"></script>
+```
+
+```javascript
+angular.module('myModule', ['vkEmojiPicker', 'mgcrea.ngStrap']);
+```
+
+Also Emoji Picker provides a couple handy directives:
+
+* `emojify` - converts an emoji string into image
+
+`<div ng-bind-html="message | emojify"></div>`
+
+* `hexify` - converts an emoji string into UTF-8 characters
+
+`<div ng-bind-html="message | hexify"></div>`
+
 
 Known issues and limitations
 ----------------------------
-1. **It's not ready for production yet**
-2. The picker requires AngularJS 1.3. Didn't test on 1.4 version, probably it's broken.
+1. The picker requires AngularJS 1.3. Didn't test on 1.4 versions, probably it's broken.
+2. Angular-UI-Bootstrap is not supported yet
+
+### Bugs and feature requests
+If you found a bug or have an idea feel free [to open a new issue](https://github.com/terranisu/angular-emoji-picker/issues/new).
 
 Contributing
 ------------
-
-Any contribution is highly appreciated. Especially to fix all my typos :)
+Any contribution is highly appreciated especially to fix all my grammar mistakes :)
 
 1. Fork it ( https://github.com/terranisu/angular-emoji-picker/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+3. Create a feature and add tests if required
+4. Commit your changes (`git commit -am 'Add some feature'`)
+5. Push to the branch (`git push origin my-new-feature`)
+6. Create a new Pull Request
 
 Also consider running any code through the code style checker `jscs` (or even better use it in your editor) with preset set to `yandex`,
 but the parameter `validateIndentation` should be changed to a value `2` instead of original one `4`
