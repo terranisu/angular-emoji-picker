@@ -1,13 +1,13 @@
 {
   "name": "angular-emoji-picker",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.3",
   "authors": [
     {
       "name": "Vadim Kadnikov",
       "homepage": "https://github.com/terranisu"
     }
   ],
-  "description": "AngularJS Emoji picker",
+  "description": "A simple Emoji picker for AngularJS",
   "main": [],
   "dependencies": {
     "angular": "1.3.x",
