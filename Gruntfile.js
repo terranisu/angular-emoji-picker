@@ -105,5 +105,5 @@ module.exports = function (grunt) {
     'clean'
   ]);
 
-  grunt.registerTask('default', ['watch:dev']);
+  grunt.registerTask('default', ['install']);
 };
