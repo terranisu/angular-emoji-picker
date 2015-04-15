@@ -39,9 +39,10 @@ angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).run([
     //  '<i class="smiley-{{smiley}}" ng-repeat="smiley in smilies" ng-click="append(smiley)"></i>'+
     //  '</div>'
     // );
+
     $templateCache.put('templates/emoji-button-strap.html',
       '<i class="emoji-picker emoji-smile" bs-popover ' +
-      'data-template="template/emoji-picker/popover-strap.html" ' +
+      'data-template="templates/emoji-popover-strap.html" ' +
       'data-placement="{{ !placement && \'left\' || placement }}" ' +
       'title="{{ title }}"></i>'
     );

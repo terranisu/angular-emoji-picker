@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('vkEmojiExample', [
+angular.module('vkEmojiAngularStrapExample', [
   'ngMaterial',
   'ngMessages',
-  'vkEmojiPicker'
+  'vkEmojiPicker',
+  'mgcrea.ngStrap'
 ]).controller('EmojiController', [
   '$scope', function ($scope) {
     $scope.post = {

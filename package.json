@@ -1,6 +1,6 @@
 {
   "name": "angular-emoji-picker",
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0-beta",
   "description": "AngularJS Emoji picker",
   "main": "Gruntfile.js",
   "scripts": {
