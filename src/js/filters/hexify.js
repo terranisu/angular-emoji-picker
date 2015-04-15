@@ -13,8 +13,8 @@ angular.module('vkEmojiPicker').filter('hexify', [
       }
 
       for (var i = 0; i < matches.length; i++) {
-        var emojiString = matches[i],
-            property = emojiString.replace(/\:/g, '');
+        var emojiString = matches[i];
+        var property = emojiString.replace(/\:/g, '');
 
         if (emojiHex.emoji.hasOwnProperty(property)) {
           text = text.replace(emojiString, emojiHex.emoji[property]);

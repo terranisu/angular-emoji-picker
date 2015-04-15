@@ -1,16 +1,16 @@
 angular.module('vkEmojiPicker').directive('emojiPicker', [
   'EmojiGroups', 'vkEmojiStorage', function (emojiGroups, storage) {
     var RECENT_LIMIT = 36;
+    var templateUrl = 'template/emoji-picker/button-bootstrap.html';
 
     try {
       angular.module('ui.bootstrap.popover');
-      var templateUrl = 'template/emoji-picker/button-bootstrap.html';
-    } catch(e) {
+    } catch (e) {
       try {
         angular.module('mgcrea.ngStrap.popover');
-        var templateUrl = 'template/emoji-picker/button-strap.html';
-      } catch(e) {
-        var templateUrl = '../src/templates/emoji-button.html';
+        templateUrl = 'template/emoji-picker/button-strap.html';
+      } catch (e) {
+        templateUrl = '../src/templates/emoji-button.html';
       }
     }
 
@@ -22,7 +22,7 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         placement: '@placement',
         title: '@title'
       },
-      link: function($scope, element, attrs) {
+      link: function ($scope, element, attrs) {
         var recentLimit = parseInt(attrs.recentLimit, 10) || RECENT_LIMIT;
 
         $scope.groups = emojiGroups.groups;
@@ -44,7 +44,7 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
           if ($scope.selectedGroup.name === 'recent') {
             $scope.selectedGroup.emoji = storage.getFirst(recentLimit);
           }
-        }
+        };
       }
     };
   }

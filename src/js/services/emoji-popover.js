@@ -1,4 +1,4 @@
-angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
+angular.module('vkEmojiPicker').provider('$emojiPopover', function () {
   var defaultSettings = {
     title: '',
     placement: 'top',
@@ -9,14 +9,14 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
     '$rootScope', '$http', '$sce', '$templateCache', '$compile',
     function ($rootScope, $http, $sce, $templateCache, $compile) {
       function EmojiPopover(element, config) {
-        var $popover = {},
-            fetchPromises = {},
-            popoverLinker,
-            popoverTemplate,
-            popoverElement,
-            popoverScope,
-            options = angular.extend({}, defaultSettings, config),
-            scope = $popover.$scope = options.scope && options.scope.$new() || $rootScope.$new();
+        var $popover = {};
+        var fetchPromises = {};
+        var popoverLinker;
+        var popoverTemplate;
+        var popoverElement;
+        var popoverScope;
+        var options = angular.extend({}, defaultSettings, config);
+        var scope = $popover.$scope = options.scope && options.scope.$new() || $rootScope.$new();
 
         // Private functions
 
@@ -25,9 +25,13 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
             return fetchPromises[template];
           }
 
-          return (fetchPromises[template] = $http.get(template, { cache: $templateCache }).then(function (response) {
+          fetchPromises[template] = $http.get(template, {
+            cache: $templateCache
+          });
+
+          return fetchPromises[template].then(function (response) {
             return response.data;
-          }));
+          });
         };
 
         var applyPlacement = function (parentElement, popoverElement) {
@@ -96,7 +100,7 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
 
         scope.placement = options.placement;
 
-        scope.$hide = function() {
+        scope.$hide = function () {
           $popover.hide();
         };
 
@@ -114,7 +118,7 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
           element.on('click', $popover.toggle);
         });
 
-        $popover.show = function() {
+        $popover.show = function () {
           if ($popover.$isShown) {
             return;
           }
@@ -149,7 +153,7 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function() {
           $popover.$isShown ? $popover.hide() : $popover.show();
         };
 
-        $popover.destroy = function() {
+        $popover.destroy = function () {
           element.off('click', $popover.toggle);
           destroyPopoverElement(popoverScope, popoverElement);
           scope.$destroy();

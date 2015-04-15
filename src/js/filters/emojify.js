@@ -9,9 +9,10 @@ angular.module('vkEmojiPicker').filter('emojify', [
 
       return input.replace(regex, function (match, text) {
         var className = text.replace(/_/g, '-');
+        var output = ['<i class="emoji-picker emoji-', className, '" title=":', text, ':"></i>'];
 
-        return "<i class='emoji-picker emoji-" + className + "' title=':" + text + ":'></i>";
+        return output.join('');
       });
-    }
+    };
   }
 ]);
