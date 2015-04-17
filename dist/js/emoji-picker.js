@@ -9,6 +9,9 @@ angular.module("templates/emoji-button.html", []).run(["$templateCache", functio
 angular.module("templates/emoji-popover.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/emoji-popover.html",
     "<div class=\"emoji-popover\" tabindex=\"-1\">\n" +
+    "  <div class=\"close-button-holder\">\n" +
+    "    <i class=\"close-button\" ng-click=\"$hide()\">&times;</i>\n" +
+    "  </div>\n" +
     "  <h3 class=\"emoji-popover-title\" ng-bind-html=\"title\" ng-show=\"title\"></h3>\n" +
     "  <div class=\"emoji-popover-content\">\n" +
     "    <div class=\"emoji-container\">\n" +
@@ -16,9 +19,6 @@ angular.module("templates/emoji-popover.html", []).run(["$templateCache", functi
     "        <i class=\"emoji-group {{ ::group.icon.name }}\"\n" +
     "           ng-class=\"(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : ''\"\n" +
     "           ng-repeat=\"group in ::groups\" ng-click=\"changeGroup(group)\"></i>\n" +
-    "        <div class=\"pull-right close-button-holder\">\n" +
-    "          <i class=\"close-button\" ng-click=\"$hide()\">&times;</i>\n" +
-    "        </div>\n" +
     "      </div>\n" +
     "      <i class=\"emoji-picker emoji-{{ ::toClassName(emoji) }}\" ng-repeat=\"emoji in selectedGroup.emoji\" ng-click=\"append(emoji)\"></i>\n" +
     "    </div>\n" +
@@ -72,6 +72,9 @@ angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).run([
     $templateCache.put('templates/emoji-popover-strap.html',
       '<div class="popover" tabindex="-1">' +
         '<div class="arrow"></div>' +
+        '<div class="close-button-holder">' +
+          '<i class="close-button" ng-click="$hide()">&times;</i>' +
+        '</div>' +
         '<h3 class="popover-title" ng-bind-html="title" ng-show="title"></h3>' +
         '<div class="popover-content">' +
           '<div class="emoji-container">' +
@@ -79,9 +82,6 @@ angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).run([
               '<i class="emoji-group {{ ::group.icon.name }}"' +
               ' ng-class="(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : \'\'"' +
               ' ng-repeat="group in ::groups" ng-click="changeGroup(group)"></i>' +
-              '<div class="pull-right close-button-holder">' +
-                '<button type="button" class="close" ng-click="$hide()">&times;</button>' +
-              '</div>' +
             '</div>' +
             '<i class="emoji-picker emoji-{{ ::toClassName(emoji) }}"' +
             ' ng-repeat="emoji in selectedGroup.emoji" ng-click="append(emoji)"></i>' +
@@ -1287,7 +1287,7 @@ angular.module('vkEmojiPicker').constant('EmojiHex', (function () {
 
 angular.module('vkEmojiPicker').directive('emojiPicker', [
   'EmojiGroups', 'vkEmojiStorage', function (emojiGroups, storage) {
-    var RECENT_LIMIT = 36;
+    var RECENT_LIMIT = 54;
     var templateUrl = 'templates/emoji-button-bootstrap.html';
 
     try {

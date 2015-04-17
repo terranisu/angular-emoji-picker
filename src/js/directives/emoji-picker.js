@@ -1,6 +1,6 @@
 angular.module('vkEmojiPicker').directive('emojiPicker', [
   'EmojiGroups', 'vkEmojiStorage', function (emojiGroups, storage) {
-    var RECENT_LIMIT = 36;
+    var RECENT_LIMIT = 54;
     var templateUrl = 'templates/emoji-button-bootstrap.html';
 
     try {

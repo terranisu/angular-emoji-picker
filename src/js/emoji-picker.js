@@ -43,6 +43,9 @@ angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).run([
     $templateCache.put('templates/emoji-popover-strap.html',
       '<div class="popover" tabindex="-1">' +
         '<div class="arrow"></div>' +
+        '<div class="close-button-holder">' +
+          '<i class="close-button" ng-click="$hide()">&times;</i>' +
+        '</div>' +
         '<h3 class="popover-title" ng-bind-html="title" ng-show="title"></h3>' +
         '<div class="popover-content">' +
           '<div class="emoji-container">' +
@@ -50,9 +53,6 @@ angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).run([
               '<i class="emoji-group {{ ::group.icon.name }}"' +
               ' ng-class="(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : \'\'"' +
               ' ng-repeat="group in ::groups" ng-click="changeGroup(group)"></i>' +
-              '<div class="pull-right close-button-holder">' +
-                '<button type="button" class="close" ng-click="$hide()">&times;</button>' +
-              '</div>' +
             '</div>' +
             '<i class="emoji-picker emoji-{{ ::toClassName(emoji) }}"' +
             ' ng-repeat="emoji in selectedGroup.emoji" ng-click="append(emoji)"></i>' +

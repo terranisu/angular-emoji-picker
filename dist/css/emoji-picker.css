@@ -6,6 +6,21 @@
   .popover button:focus {
     outline: 0;
   }
+  .emoji-popover .close-button-holder,
+  .popover .close-button-holder {
+    position: absolute;
+    right: 10px;
+  }
+    .emoji-popover .close-button-holder .close-button,
+    .popover .close-button-holder .close-button {
+      cursor: pointer;
+      font-size: 26px;
+      color: #b3b3b3;
+    }
+      .emoji-popover .close-button-holder .close-button:hover,
+      .popover .close-button-holder .close-button:hover {
+        color: #d7d7d7;
+      }
 .emoji-picker {
   text-indent: -9999px;
   display: inline-block;
@@ -15,8 +30,8 @@
   cursor: pointer;
 }
 .emoji-container {
-  margin: 0 -6px;
-  width: 200px;
+  margin: 0 -10px;
+  min-width: 200px;
   height: 200px;
   overflow: hidden;
   overflow-y: scroll;
@@ -31,18 +46,6 @@
     background: #ccc;
     border: 1px solid #b3b3b3;
   }
-  .emoji-container .close-button-holder {
-    margin-right: 10px;
-    float: right;
-  }
-    .emoji-container .close-button-holder .close-button {
-      display: inline-block;
-      height: 29px;
-      cursor: pointer;
-      font-size: 26px;
-      color: #b3b3b3;
-    }
-
 .emoji-popover {
   position: absolute;
   top: 0;
