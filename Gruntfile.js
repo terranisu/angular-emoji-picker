@@ -77,7 +77,7 @@ module.exports = function (grunt) {
           'src/css/**/*.css',
           'src/js/**/*.js',
           'src/templates/**/*.html',
-          'example/index.html'
+          'demo/**/*'
         ],
         tasks: ['install'],
         options: {

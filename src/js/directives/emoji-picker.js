@@ -19,8 +19,8 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
       templateUrl: templateUrl,
       scope: {
         model: '=emojiPicker',
-        placement: '@placement',
-        title: '@title'
+        placement: '@',
+        title: '@'
       },
       link: function ($scope, element, attrs) {
         var recentLimit = parseInt(attrs.recentLimit, 10) || RECENT_LIMIT;
@@ -45,6 +45,10 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
             $scope.selectedGroup.emoji = storage.getFirst(recentLimit);
           }
         };
+
+        $scope.$on('$destroy', function () {
+          element.remove();
+        });
       }
     };
   }
