@@ -25,9 +25,10 @@ Usage
 angular.module('myModule', ['vkEmojiPicker']);
 ```
 By default Emoji Picker uses its own popover, which, to be honest, has not a very great realization. But you have an option - you can use
-external dependencies: [Angular Strap](https://github.com/mgcrea/angular-strap) and [Bootstrap](https://github.com/twbs/bootstrap). In that
-case you have to include additional scripts on your page:
+external dependencies: [Angular Strap](https://github.com/mgcrea/angular-strap), [Angular-UI Bootstrap](https://github.com/angular-ui/bootstrap)
+and [Bootstrap](https://github.com/twbs/bootstrap). In that case you have to include additional scripts on your page:
 
+### Angular Strap
 ```html
 <link rel="stylesheet" href="/path/to/bootstrap/dist/css/bootstrap.min.css">
 <script src="/path/to/angular-strap/dist/angular-strap.min.js"></script>
@@ -36,6 +37,21 @@ case you have to include additional scripts on your page:
 
 ```javascript
 angular.module('myModule', ['vkEmojiPicker', 'mgcrea.ngStrap']);
+```
+
+### Angular-UI Bootstrap
+Versions 0.12.x and lower are not supported. See "Known issues" section below for more information.
+
+```html
+<link rel="stylesheet" href="/path/to/bootstrap/dist/css/bootstrap.min.css">
+<script src="/path/to/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
+<script src="/path/to/angular-ui-bootstrap/src/position/position.js"></script>
+<script src="/path/to/angular-ui-bootstrap/src/tooltip/tooltip.js"></script>
+<script src="/path/to/angular-ui-bootstrap/src/popover/popover.js"></script>
+```
+
+```javascript
+angular.module('myModule', ['vkEmojiPicker', 'ui.bootstrap.popover']);
 ```
 
 Also Emoji Picker provides a couple handy directives:
@@ -51,8 +67,10 @@ Also Emoji Picker provides a couple handy directives:
 
 Known issues and limitations
 ----------------------------
-1. The picker requires AngularJS 1.3. Didn't test on 1.4 versions, probably it's broken.
-2. Angular-UI-Bootstrap is not supported yet
+1. The picker requires AngularJS 1.3 as a minimal dependency. Didn't test on 1.4 versions, probably it's broken.
+2. Angular-UI-Bootstrap is supported partially.
+You have to use version >=0.13 version which is not being released right now. Thus you can get master branch with bower `bower install angular-ui-bootstrap`
+and include only required files to your project.
 
 ### Bugs and feature requests
 If you found a bug or have an idea feel free [to open a new issue](https://github.com/terranisu/angular-emoji-picker/issues/new).
