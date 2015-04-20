@@ -31,6 +31,7 @@ angular.module("templates/emoji-popover.html", []).run(["$templateCache", functi
 
 angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).run([
   '$templateCache', function ($templateCache) {
+    // Angular-UI Bootstrap templates
     $templateCache.put('templates/emoji-button-bootstrap.html',
       '<i class="emoji-picker emoji-smile" popover-template="templates/emoji-popover-bootstrap.html"' +
       ' popover-placement="{{ !placement && \'left\' || placement }}" popover-title="{{ title }}"></i>'
@@ -62,11 +63,10 @@ angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).run([
       '</div>'
     );
 
+    // Angular Strap templates
     $templateCache.put('templates/emoji-button-strap.html',
-      '<i class="emoji-picker emoji-smile" bs-popover ' +
-      'data-template="templates/emoji-popover-strap.html" ' +
-      'data-placement="{{ !placement && \'left\' || placement }}" ' +
-      'title="{{ title }}"></i>'
+      '<i class="emoji-picker emoji-smile" bs-popover template="templates/emoji-popover-strap.html" ' +
+      'placement="{{ !placement && \'left\' || placement }}" title="{{ title }}"></i>'
     );
 
     $templateCache.put('templates/emoji-popover-strap.html',
@@ -1317,7 +1317,12 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         $scope.selectedGroup.emoji = storage.getFirst(recentLimit);
 
         $scope.append = function (emoji) {
+          if ($scope.model == null) {
+            $scope.model = '';
+          }
+
           $scope.model += [' :', emoji, ':'].join('');
+          $scope.model = $scope.model.trim();
           storage.store(emoji);
         };
 

@@ -30,7 +30,12 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         $scope.selectedGroup.emoji = storage.getFirst(recentLimit);
 
         $scope.append = function (emoji) {
+          if ($scope.model == null) {
+            $scope.model = '';
+          }
+
           $scope.model += [' :', emoji, ':'].join('');
+          $scope.model = $scope.model.trim();
           storage.store(emoji);
         };
 
