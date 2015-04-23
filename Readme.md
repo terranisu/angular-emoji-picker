@@ -1,6 +1,8 @@
 AngularJS Emoji Picker
 ======================
 
+[![Code Climate](https://codeclimate.com/github/terranisu/angular-emoji-picker/badges/gpa.svg)](https://codeclimate.com/github/terranisu/angular-emoji-picker)
+
 AngularJS Emoji Picker is a simple AngularJs module which allows you to add emoji images to your model value. This project is heavily inspired by
 [Angular Emoji](https://github.com/Coraza/angular-emoji-popup/), but it doesn't require external dependencies like JQuery, JQuery plugins and so forth.
 
