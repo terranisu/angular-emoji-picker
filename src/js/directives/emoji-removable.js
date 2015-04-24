@@ -27,6 +27,10 @@ angular.module('vkEmojiPicker').directive('emojiRemovable', function () {
       };
 
       var rebindClick = function () {
+        if ($scope.model == null) {
+          return;
+        }
+
         var words = $scope.model.split(/\s+/);
         var emojis = element[0].querySelectorAll('i.emoji-picker');
         var mapping = createMapping(words, emojis);

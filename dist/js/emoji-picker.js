@@ -1403,6 +1403,10 @@ angular.module('vkEmojiPicker').directive('emojiRemovable', function () {
       };
 
       var rebindClick = function () {
+        if ($scope.model == null) {
+          return;
+        }
+
         var words = $scope.model.split(/\s+/);
         var emojis = element[0].querySelectorAll('i.emoji-picker');
         var mapping = createMapping(words, emojis);
@@ -1413,7 +1417,7 @@ angular.module('vkEmojiPicker').directive('emojiRemovable', function () {
           emojiElement.on('click', function () {
             words.splice(mapping[key], 1);
             $scope.model = words.join(' ');
-            emojiElement.off();
+            emojiElement.scope().$destroy();
             emojiElement.remove();
             $scope.$apply();
           });
