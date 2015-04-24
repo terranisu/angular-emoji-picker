@@ -10,7 +10,7 @@ angular.module('vkEmojiDefaultExample', [
       author: '',
       title: '',
       message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit... ' +
-      'What else do you expect from me? :trollface: :+1:'
+      'What else do you expect from me? 1f61d 1f170 :smile:'
     };
   }
 ]);
