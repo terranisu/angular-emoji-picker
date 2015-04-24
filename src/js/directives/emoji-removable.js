@@ -1,18 +1,43 @@
-angular.module('vkEmojiPicker').directive('emojiRemovable', [function () {
+// TODO: it is needed to check this directive for memory leaks.
+angular.module('vkEmojiPicker').directive('emojiRemovable', function () {
   return {
     restrict: 'A',
     scope: {
       model: '=emojiRemovable'
     },
     link: function ($scope, element) {
-      var rebindClick = function (_newLength, _oldLength) {
-        var emojis = element[0].querySelectorAll('i.emoji-picker');
+      var createMapping = function (words, emojis) {
+        var map = [];
+        var offset = 0;
+
         angular.forEach(emojis, function (emoji) {
+          var emojiElement = angular.element(emoji);
+          var regexp = new RegExp('^:?' + emojiElement.attr('alt') + ':?$');
+
+          for (var i = offset; i < words.length; i++) {
+            if (regexp.test(words[i])) {
+              map.push(i);
+              offset = i + 1;
+              break;
+            }
+          }
+        });
+
+        return map;
+      };
+
+      var rebindClick = function () {
+        var words = $scope.model.split(/\s+/);
+        var emojis = element[0].querySelectorAll('i.emoji-picker');
+        var mapping = createMapping(words, emojis);
+
+        angular.forEach(emojis, function (emoji, key) {
           var emojiElement = angular.element(emoji);
           emojiElement.off();
           emojiElement.on('click', function () {
-            $scope.model = $scope.model.replace(emojiElement.attr('title'), '');
-            emojiElement.off();
+            words.splice(mapping[key], 1);
+            $scope.model = words.join(' ');
+            emojiElement.scope().$destroy();
             emojiElement.remove();
             $scope.$apply();
           });
@@ -20,13 +45,16 @@ angular.module('vkEmojiPicker').directive('emojiRemovable', [function () {
       };
 
       $scope.$watch(
-        function () { return element[0].querySelectorAll('i.emoji-picker').length; },
+        function () {
+          return element[0].querySelectorAll('i.emoji-picker').length;
+        },
         rebindClick
       );
 
       $scope.$on('$destroy', function () {
+        element.off();
         element.remove();
       });
     }
   };
-}]);
+});
