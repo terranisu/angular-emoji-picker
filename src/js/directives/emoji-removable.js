@@ -41,7 +41,7 @@ angular.module('vkEmojiPicker').directive('emojiRemovable', function () {
           emojiElement.on('click', function () {
             words.splice(mapping[key], 1);
             $scope.model = words.join(' ');
-            emojiElement.scope().$destroy();
+            emojiElement.off();
             emojiElement.remove();
             $scope.$apply();
           });
