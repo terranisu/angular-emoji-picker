@@ -8,7 +8,10 @@
     }
   ],
   "description": "A simple Emoji picker for AngularJS",
-  "main": [],
+  "main": [
+    "dist/js/emoji-picker.js",
+    "dist/css/emoji-picker.css"
+  ],
   "dependencies": {
     "angular": "1.3.x",
     "angular-sanitize": "1.3.x"
