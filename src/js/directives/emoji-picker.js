@@ -1,5 +1,5 @@
 angular.module('vkEmojiPicker').directive('emojiPicker', [
-  'EmojiGroups', 'vkEmojiStorage', function (emojiGroups, storage) {
+  'EmojiGroups', 'vkEmojiStorage', '$filter', function (emojiGroups, storage, $filter) {
     var RECENT_LIMIT = 54;
     var templateUrl = 'templates/emoji-button-bootstrap.html';
 
@@ -33,8 +33,19 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
           if ($scope.model == null) {
             $scope.model = '';
           }
-
-          $scope.model += [' :', emoji, ':'].join('');
+          
+          if (attrs.hasOwnProperty('output')) {
+            switch (attrs.output) {
+              case 'unicode':
+                $scope.model += String.fromCodePoint('0x' + $filter('hexify')([' :', emoji, ':'].join('')).trim());
+              break;
+              default:
+              $scope.model += [' :', emoji, ':'].join('').trim();
+            }
+          } else {
+            $scope.model += [' :', emoji, ':'].join('').trim();
+          }
+          
           $scope.model = $scope.model.trim();
           storage.store(emoji);
         };

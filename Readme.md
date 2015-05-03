@@ -26,8 +26,40 @@ Usage
 ```javascript
 angular.module('myModule', ['vkEmojiPicker']);
 ```
-By default Emoji Picker uses its own popover, which, to be honest, has not a very great realization. But you have an option - you can use
-external dependencies: [Angular Strap](https://github.com/mgcrea/angular-strap), [Angular-UI Bootstrap](https://github.com/angular-ui/bootstrap)
+
+Then to use the directive:
+```html
+<textarea ng-model="message"></textarea>
+<span emoji-picker="message" output="unicode" placement="right" title="Emoji" recent-limit="12"></span>
+```
+
+Options
+-------
+
+* `emoji-picker="<model>"`
+  * Instantiates the picker so that it appends chosen emoji to scope variable `<model>`.
+* `output="<text|unicode>"`
+  * Sets the output mode. Defaults to `text`.
+    * `text` — outputs :smile: as a text-string representation ("`:smile:`").
+    * `unicode` — outputs :smile: as U+1F604.
+* `placement="<right|left>"`
+  * Set alignment direction.
+* `title="<string>"`
+  * Sets the title of the picker.
+* `recent-limit="<integer>"`
+  * Sets the max number of items to display in the "recent" pane.
+
+Emoji Picker also provides a couple handy directives:
+
+* `emojify` - converts an emoji string into image
+
+`<div ng-bind-html="message | emojify"></div>`
+
+* `hexify` - converts an emoji string into UTF-8 characters
+
+`<div ng-bind-html="message | hexify"></div>`
+
+By default Emoji Picker uses its own popover, which, to be honest, has not a very great realization. But you have an option - you can use external dependencies: [Angular Strap](https://github.com/mgcrea/angular-strap), [Angular-UI Bootstrap](https://github.com/angular-ui/bootstrap)
 and [Bootstrap](https://github.com/twbs/bootstrap). In that case you have to include additional scripts on your page:
 
 ### Angular Strap
@@ -59,17 +91,6 @@ $ bower install angular-ui-bootstrap#master --save
 ```javascript
 angular.module('myModule', ['vkEmojiPicker', 'ui.bootstrap.popover']);
 ```
-
-Also Emoji Picker provides a couple handy directives:
-
-* `emojify` - converts an emoji string into image
-
-`<div ng-bind-html="message | emojify"></div>`
-
-* `hexify` - converts an emoji string into UTF-8 characters
-
-`<div ng-bind-html="message | hexify"></div>`
-
 
 ## Known issues and limitations
 
