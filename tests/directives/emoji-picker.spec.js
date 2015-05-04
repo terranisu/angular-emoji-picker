@@ -31,4 +31,14 @@ describe('Emoji Picker directive', function () {
     $scope.$$childTail.append('smile');
     expect($scope.$$childTail.model).to.be.eql(':smile:');
   });
+  
+  it('should be able to output unicode emoji', function () {
+    var element = angular.element(
+      '<span emoji-picker="message" output="unicode" placement="right" title="Emoji" recent-limit="12"></span>'
+    );
+    $compile(element)($scope);
+    $scope.$digest();
+    $scope.$$childTail.append('smile');
+    expect($scope.$$childTail.model).to.be.eql('😄');
+  });
 });
