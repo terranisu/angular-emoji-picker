@@ -1,11 +1,6 @@
-.emoji-popover:focus,
-.popover:focus {
+*:focus {
   outline: 0;
 }
-  .emoji-popover button:focus,
-  .popover button:focus {
-    outline: 0;
-  }
   .emoji-popover .close-button-holder,
   .popover .close-button-holder {
     position: absolute;
