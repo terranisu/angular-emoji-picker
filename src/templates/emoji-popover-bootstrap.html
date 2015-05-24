@@ -1,0 +1,14 @@
+<div class="emoji-container">
+  <div class="emoji-groups">
+    <i class="emoji-group {{ ::group.icon.name }}"
+       ng-class="(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : ''"
+       ng-repeat="group in ::groups"
+       ng-click="changeGroup(group)">
+    </i>
+    <span class="btn-backspace" ng-click="remove()">&#x232B;</span>
+  </div>
+  <i class="emoji-picker emoji-{{ ::toClassName(emoji) }}"
+     ng-repeat="emoji in selectedGroup.emoji"
+     ng-click="append(emoji)">
+  </i>
+</div>

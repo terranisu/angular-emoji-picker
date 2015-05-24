@@ -14,7 +14,8 @@
     .emoji-popover .close-button-holder .close-button,
     .popover .close-button-holder .close-button {
       cursor: pointer;
-      font-size: 26px;
+      font-size: 20px;
+      font-weight: bold;
       color: #b3b3b3;
     }
       .emoji-popover .close-button-holder .close-button:hover,
@@ -985,6 +986,18 @@
   background-size: 42px 350px;
   cursor: pointer;
 }
+.emoji-groups .btn-backspace {
+  color: #a8a8a8;
+  cursor: pointer;
+  float: right;
+  font-size: 24px;
+  height: 30px;
+  margin-right: 10px;
+  width: 30px;
+}
+  .emoji-groups .btn-backspace:hover {
+    color: #d7d7d7;
+  }
 .is-1x .emoji-groups .emoji-group {
   background-image: url('../img/emoji-groups-1x.png');
 }

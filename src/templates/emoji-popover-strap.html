@@ -1,9 +1,10 @@
-<div class="emoji-popover" tabindex="-1">
+<div class="popover" tabindex="-1">
+  <div class="arrow"></div>
   <div class="close-button-holder">
     <i class="close-button" ng-click="$hide()">&times;</i>
   </div>
-  <h3 class="emoji-popover-title" ng-bind-html="title" ng-show="title"></h3>
-  <div class="emoji-popover-content">
+  <h3 class="popover-title" ng-bind-html="title" ng-show="title"></h3>
+  <div class="popover-content">
     <div class="emoji-container">
       <div class="emoji-groups">
         <i class="emoji-group {{ ::group.icon.name }}"

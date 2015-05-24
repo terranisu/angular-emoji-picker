@@ -39,6 +39,11 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
           storage.store(emoji);
         };
 
+        $scope.remove = function () {
+          var regExp = new RegExp(':[a-z0-9\+\_\-]+:$', 'i');
+          $scope.model = $scope.model.replace(regExp, '').trim();
+        };
+
         $scope.toClassName = function (emoji) {
           return emoji.replace(/_/g, '-');
         };
