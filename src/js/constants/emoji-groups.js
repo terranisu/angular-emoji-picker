@@ -1,5 +1,5 @@
 angular.module('vkEmojiPicker').constant('EmojiGroups', (function () {
-  var faces = ['bowtie', 'smile', 'laughing', 'blush', 'smiley', 'relaxed',
+  var faces = ['smile', 'laughing', 'blush', 'smiley', 'relaxed',
     'smirk', 'heart_eyes', 'kissing_heart', 'kissing_closed_eyes', 'flushed',
     'relieved', 'satisfied', 'grin', 'wink', 'stuck_out_tongue_winking_eye',
     'stuck_out_tongue_closed_eyes', 'grinning', 'kissing', 'winky_face',
@@ -16,7 +16,7 @@ angular.module('vkEmojiPicker').constant('EmojiGroups', (function () {
     'sparkling_heart', 'sparkles', 'star', 'star2', 'dizzy', 'boom',
     'collision', 'anger', 'exclamation', 'question', 'grey_exclamation',
     'grey_question', 'zzz', 'dash', 'sweat_drops', 'notes', 'musical_note',
-    'fire', 'hankey', 'poop', 'shit', '\\+1', 'thumbsup', '-1', 'thumbsdown',
+    'fire', 'hankey', '\\+1', 'thumbsup', '-1', 'thumbsdown',
     'ok_hand', 'punch', 'facepunch', 'fist', 'v', 'wave', 'hand', 'raised_hand',
     'open_hands', 'point_up', 'point_down', 'point_left', 'point_right',
     'raised_hands', 'pray', 'point_up_2', 'clap', 'muscle', 'metal', 'fu',
@@ -33,9 +33,7 @@ angular.module('vkEmojiPicker').constant('EmojiGroups', (function () {
     'japanese_goblin', 'see_no_evil', 'hear_no_evil', 'speak_no_evil',
     'guardsman', 'skull', 'feet', 'lips', 'kiss', 'droplet', 'ear', 'eyes',
     'nose', 'tongue', 'love_letter', 'bust_in_silhouette',
-    'busts_in_silhouette', 'speech_balloon', 'thought_balloon', 'feelsgood',
-    'finnadie', 'goberserk', 'godmode', 'hurtrealbad', 'rage1', 'rage2',
-    'rage3', 'rage4', 'suspect', 'trollface'];
+    'busts_in_silhouette', 'speech_balloon', 'thought_balloon'];
 
   var nature = ['sunny', 'umbrella', 'cloud',
     'snowflake', 'snowman', 'zap', 'cyclone', 'foggy', 'ocean', 'cat', 'dog',
@@ -57,7 +55,7 @@ angular.module('vkEmojiPicker').constant('EmojiGroups', (function () {
     'full_moon', 'waning_gibbous_moon', 'last_quarter_moon',
     'waning_crescent_moon', 'last_quarter_moon_with_face',
     'first_quarter_moon_with_face', 'moon', 'earth_africa', 'earth_americas',
-    'earth_asia', 'volcano', 'milky_way', 'partly_sunny', 'octocat', 'squirrel'];
+    'earth_asia', 'volcano', 'milky_way', 'partly_sunny'];
 
   var life = ['bamboo', 'gift_heart', 'dolls', 'school_satchel', 'mortar_board', 'flags',
     'fireworks', 'sparkler', 'wind_chime', 'rice_scene', 'jack_o_lantern',
@@ -164,7 +162,7 @@ angular.module('vkEmojiPicker').constant('EmojiGroups', (function () {
     'white_square_button', 'black_circle', 'white_circle', 'red_circle',
     'large_blue_circle', 'large_blue_diamond', 'large_orange_diamond',
     'small_blue_diamond', 'small_orange_diamond', 'small_red_triangle',
-    'small_red_triangle_down', 'shipit'];
+    'small_red_triangle_down'];
 
   var all = faces.concat(nature, life, travel, signs);
 

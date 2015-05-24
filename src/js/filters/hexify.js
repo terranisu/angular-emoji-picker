@@ -1,5 +1,5 @@
 angular.module('vkEmojiPicker').filter('hexify', [
-  'EmojiHex', function (emojiHex) {
+  'EmojiHex', function (EmojiHex) {
     return function (text) {
       if (text == null) {
         return '';
@@ -16,8 +16,8 @@ angular.module('vkEmojiPicker').filter('hexify', [
         var emojiString = matches[i];
         var property = emojiString.replace(/\:/g, '');
 
-        if (emojiHex.emoji.hasOwnProperty(property)) {
-          text = text.replace(emojiString, emojiHex.emoji[property]);
+        if (EmojiHex.emoji.hasOwnProperty(property)) {
+          text = text.replace(emojiString, EmojiHex.emoji[property]);
         }
       }
 

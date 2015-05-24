@@ -9,16 +9,12 @@ describe('Emojify filter', function () {
 
   it('should be able to convert emoji string into image representation', function () {
     var text = $filter('emojify')('This is a text with :smile:');
-    expect(text).to.be.eql('This is a text with <i class="emoji-picker emoji-smile" alt="smile" title=":smile:"></i>');
+    expect(text).to.be.eql('This is a text with \ud83d\ude04');
   });
 
   it('should be able to convert a few emojis into hex representation', function () {
     var text = $filter('emojify')('This is a text with :smile: :lollipop: :heart_eyes_cat:');
-    expect(text).to.be.eql(
-      'This is a text with <i class="emoji-picker emoji-smile" alt="smile" title=":smile:"></i> ' +
-      '<i class="emoji-picker emoji-lollipop" alt="lollipop" title=":lollipop:"></i> ' +
-      '<i class="emoji-picker emoji-heart-eyes-cat" alt="heart_eyes_cat" title=":heart_eyes_cat:"></i>'
-    );
+    expect(text).to.be.eql('This is a text with \ud83d\ude04 \ud83c\udf6d \ud83d\ude3b');
   });
 
   it('should return regular text when no emoji specified', function () {
