@@ -9,8 +9,7 @@ angular.module('vkEmojiDefaultExample', [
     $scope.post = {
       author: '',
       title: '',
-      message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit... ' +
-      'What else do you expect from me? 1f61d 1f170 :smile:'
+      message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit... :smile: :lollipop:'
     };
   }
 ]);
