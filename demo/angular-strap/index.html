@@ -53,7 +53,7 @@
           </div>
         </md-toolbar>
         <md-content layout-padding style="padding: 10px;">
-          <p><strong>Imagify filter</strong>: <span ng-bind-html="post.message | imagify"></span></p>
+          <p><strong>Imagify filter</strong>: <span emoji-removable="post.message" ng-bind-html="post.message | imagify"></span></p>
           <p><strong>Hexify filter</strong>: <span ng-bind-html="post.message | hexify"></span></p>
           <p><strong>Hexify and unicodify filters</strong>: <span ng-bind-html="post.message | hexify | unicodify"></span></p>
           <p><strong>Emojify filter</strong>: <span ng-bind-html="post.message | emojify"></span></p>
