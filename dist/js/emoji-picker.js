@@ -3,10 +3,9 @@ angular.module('templates-dist', ['templates/emoji-button-bootstrap.html', 'temp
 angular.module("templates/emoji-button-bootstrap.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/emoji-button-bootstrap.html",
     "<i class=\"emoji-picker emoji-smile\"\n" +
-    "   popover-template=\"templates/emoji-popover-bootstrap.html\"\n" +
+    "   popover-template=\"'templates/emoji-popover-bootstrap.html'\"\n" +
     "   popover-placement=\"{{ !placement && 'left' || placement }}\"\n" +
-    "   popover-title=\"{{ title }}\">\n" +
-    "</i>\n" +
+    "   popover-title=\"{{ title }}\"></i>\n" +
     "");
 }]);
 
@@ -16,8 +15,7 @@ angular.module("templates/emoji-button-strap.html", []).run(["$templateCache", f
     "   bs-popover\n" +
     "   template=\"templates/emoji-popover-strap.html\"\n" +
     "   placement=\"{{ !placement && 'left' || placement }}\"\n" +
-    "   title=\"{{ title }}\">\n" +
-    "</i>\n" +
+    "   title=\"{{ title }}\"></i>\n" +
     "");
 }]);
 
@@ -26,8 +24,7 @@ angular.module("templates/emoji-button.html", []).run(["$templateCache", functio
     "<i class=\"emoji-picker emoji-smile\"\n" +
     "   emoji-popover template=\"templates/emoji-popover.html\"\n" +
     "   placement=\"{{ ::placement }}\"\n" +
-    "   title=\"{{ ::title }}\">\n" +
-    "</i>\n" +
+    "   title=\"{{ ::title }}\"></i>\n" +
     "");
 }]);
 
@@ -176,24 +173,7 @@ angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).config(functio
       }
     }());
   }
-})
-.run([
-  '$templateCache', function ($templateCache) {
-    // TODO: compile this template by html2js
-    $templateCache.put('template/popover/popover-template.html',
-      '<div class="popover" tooltip-animation-class="fade" tooltip-classes ng-class="{ in: isOpen() }">' +
-        '<div class="arrow"></div>' +
-        '<div class="popover-inner">' +
-          '<h3 class="popover-title" ng-bind="title" ng-if="title"></h3>' +
-          '<div class="popover-content" ' +
-            'tooltip-template-transclude="content" ' +
-            'tooltip-template-transclude-scope="originScope()">' +
-          '</div>' +
-        '</div>' +
-      '</div>'
-    );
-  }
-]);
+});
 
 angular.module('vkEmojiPicker').constant('EmojiGroups', (function () {
   var faces = ['smile', 'laughing', 'blush', 'smiley', 'relaxed',

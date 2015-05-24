@@ -17,7 +17,7 @@ describe('Emoji Picker directive', function () {
     $scope.$digest();
     expect(compiledElement.html()).to.be.eql(
       '<i class="emoji-picker emoji-smile" bs-popover="" ' +
-      'template="templates/emoji-popover-strap.html" placement="right" title="Emoji"></i>'
+      'template="templates/emoji-popover-strap.html" placement="right" title="Emoji"></i>\n'
     );
     expect($scope.message).to.be.undefined;
   });

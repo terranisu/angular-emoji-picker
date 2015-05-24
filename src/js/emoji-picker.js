@@ -69,21 +69,4 @@ angular.module('vkEmojiPicker', ['ngSanitize', 'templates-dist']).config(functio
       }
     }());
   }
-})
-.run([
-  '$templateCache', function ($templateCache) {
-    // TODO: compile this template by html2js
-    $templateCache.put('template/popover/popover-template.html',
-      '<div class="popover" tooltip-animation-class="fade" tooltip-classes ng-class="{ in: isOpen() }">' +
-        '<div class="arrow"></div>' +
-        '<div class="popover-inner">' +
-          '<h3 class="popover-title" ng-bind="title" ng-if="title"></h3>' +
-          '<div class="popover-content" ' +
-            'tooltip-template-transclude="content" ' +
-            'tooltip-template-transclude-scope="originScope()">' +
-          '</div>' +
-        '</div>' +
-      '</div>'
-    );
-  }
-]);
+});
