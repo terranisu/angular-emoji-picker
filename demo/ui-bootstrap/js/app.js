@@ -10,8 +10,7 @@ angular.module('vkEmojiUiBootstrapExample', [
     $scope.post = {
       author: '',
       title: '',
-      message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit... ' +
-               'What else do you expect from me? :trollface: :+1:'
+      message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit... :smile: :thumbsup: :sushi:'
     };
   }
 ]);

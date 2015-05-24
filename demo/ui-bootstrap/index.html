@@ -41,15 +41,24 @@
             <div ng-message="md-maxlength">So much to read, man</div>
           </div>
         </md-input-container>
-        <md-whiteframe class="md-whiteframe-z1" layout="row" layout-margin layout-align="center center">
-          <div flex emoji-removable="post.message" ng-bind-html="post.message | emojify"></div>
-          <div flex ng-bind-html="post.message | hexify"></div>
-        </md-whiteframe>
         <section layout="row" layout-sm="row" layout-margin layout-align="center center">
           <md-button class="md-raised md-default">Post</md-button>
           <span style="margin: 0 20px;" emoji-picker="post.message" placement="right" title="Emoji" recent-limit="12"></span>
         </section>
       </form>
+      <div layout="column">
+        <md-toolbar class="md-warn">
+          <div class="md-toolbar-tools">
+            <h2 class="md-flex">Filter output</h2>
+          </div>
+        </md-toolbar>
+        <md-content layout-padding style="padding: 10px;">
+          <p><strong>Imagify filter</strong>: <span ng-bind-html="post.message | imagify"></span></p>
+          <p><strong>Hexify filter</strong>: <span ng-bind-html="post.message | hexify"></span></p>
+          <p><strong>Hexify and unicodify filters</strong>: <span ng-bind-html="post.message | hexify | unicodify"></span></p>
+          <p><strong>Emojify filter</strong>: <span ng-bind-html="post.message | emojify"></span></p>
+        </md-content>
+      </div>
     </md-content>
   </div>
 </div>
