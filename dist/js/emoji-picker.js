@@ -94,7 +94,7 @@ angular.module("templates/emoji-popover.html", []).run(["$templateCache", functi
     "      </div>\n" +
     "      <i class=\"emoji-picker emoji-{{ ::toClassName(emoji) }}\"\n" +
     "         ng-repeat=\"emoji in selectedGroup.emoji\"\n" +
-    "         ng-click=\"append(emoji)\">\n" +
+    "         ng-click=\"emojiClicked(emoji)\">\n" +
     "      </i>\n" +
     "    </div>\n" +
     "  </div>\n" +
@@ -1640,6 +1640,13 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function () {
                 left: position.left - popoverWidth
               };
               break;
+            case 'right-relative':
+              offset = {
+                top: 12,
+                left: 24
+              };
+              break;
+            case 'top':
             default:
               offset = {
                 top: position.top - popoverHeight - position.height * 3,
@@ -1672,6 +1679,11 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function () {
         scope.placement = options.placement;
 
         scope.$hide = function () {
+          $popover.hide();
+        };
+
+        scope.emojiClicked = function (emoji) {
+          scope.append(emoji);
           $popover.hide();
         };
 

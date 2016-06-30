@@ -15,7 +15,7 @@
       </div>
       <i class="emoji-picker emoji-{{ ::toClassName(emoji) }}"
          ng-repeat="emoji in selectedGroup.emoji"
-         ng-click="append(emoji)">
+         ng-click="emojiClicked(emoji)">
       </i>
     </div>
   </div>
