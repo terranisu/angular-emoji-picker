@@ -1,6 +1,7 @@
 angular.module('vkEmojiPicker').directive('emojiPicker', [
-  'EmojiGroups', 'vkEmojiStorage', function (emojiGroups, storage) {
+  'EmojiGroups', 'vkEmojiStorage', 'vkEmojiTransforms', function (emojiGroups, storage, vkEmojiTransforms) {
     var RECENT_LIMIT = 54;
+    var DEFAULT_OUTPUT_FORMAT = '';
     var templateUrl = 'templates/emoji-button-bootstrap.html';
 
     try {
@@ -24,6 +25,7 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
       },
       link: function ($scope, element, attrs) {
         var recentLimit = parseInt(attrs.recentLimit, 10) || RECENT_LIMIT;
+        var outputFormat = attrs.outputFormat || DEFAULT_OUTPUT_FORMAT;
 
         $scope.groups = emojiGroups.groups;
         $scope.selectedGroup = emojiGroups.groups[0];
@@ -34,7 +36,7 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
             $scope.model = '';
           }
 
-          $scope.model += [' :', emoji, ':'].join('');
+          $scope.model += formatSelectedEmoji(emoji, outputFormat);
           $scope.model = $scope.model.trim();
           storage.store(emoji);
         };
@@ -60,6 +62,15 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         $scope.$on('$destroy', function () {
           element.remove();
         });
+
+        function formatSelectedEmoji(emoji, type) {
+          emoji = [' :', emoji, ':'].join('');
+          if(type == 'unicode') {
+            return vkEmojiTransforms.emojify(emoji);
+          } else {
+            return emoji;
+          }
+        }
       }
     };
   }
