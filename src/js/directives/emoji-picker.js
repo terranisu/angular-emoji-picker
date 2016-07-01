@@ -45,7 +45,7 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         };
 
         $scope.remove = function () {
-          if(angular.isDefined($scope.model)) {
+          if (angular.isDefined($scope.model)) {
             var words = $scope.model.split(' ');
             words.pop();
             $scope.model = words.join(' ').trim();
@@ -72,7 +72,7 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
 
         function formatSelectedEmoji(emoji, type) {
           emoji = [' :', emoji, ':'].join('');
-          if(type == 'unicode') {
+          if (type == 'unicode') {
             return vkEmojiTransforms.emojify(emoji);
           } else {
             return emoji;
@@ -80,7 +80,7 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         }
 
         function fireOnChangeFunc() {
-          if($scope.onChangeFunc && typeof $scope.onChangeFunc === 'function') {
+          if ($scope.onChangeFunc && typeof $scope.onChangeFunc === 'function') {
             setTimeout($scope.onChangeFunc);
           }
         }

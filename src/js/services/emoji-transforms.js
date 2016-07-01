@@ -18,10 +18,10 @@ angular.module('vkEmojiPicker').factory('vkEmojiTransforms', [
         swappedHex[value] = key;
         unicodes.push(value);
       });
-      
+
       return unicodes.reverse();
     }
-    
+
     function hexify(text) {
       if (text == null) {
         return '';
