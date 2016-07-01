@@ -1373,9 +1373,11 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         };
 
         $scope.remove = function () {
-          var words = $scope.model.split(' ');
-          words.pop();
-          $scope.model = words.join(' ').trim();
+	  if(angular.isDefined($scope.model)) {
+	    var words = $scope.model.split(' ');
+            words.pop();
+            $scope.model = words.join(' ').trim();
+	  }
         };
 
         $scope.toClassName = function (emoji) {
