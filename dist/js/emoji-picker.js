@@ -94,7 +94,7 @@ angular.module("templates/emoji-popover.html", []).run(["$templateCache", functi
     "      </div>\n" +
     "      <i class=\"emoji-picker emoji-{{ ::toClassName(emoji) }}\"\n" +
     "         ng-repeat=\"emoji in selectedGroup.emoji\"\n" +
-    "         ng-click=\"append(emoji)\">\n" +
+    "         ng-click=\"emojiClicked(emoji)\">\n" +
     "      </i>\n" +
     "    </div>\n" +
     "  </div>\n" +
@@ -1325,8 +1325,9 @@ angular.module('vkEmojiPicker').constant('EmojiHex', (function () {
 })());
 
 angular.module('vkEmojiPicker').directive('emojiPicker', [
-  'EmojiGroups', 'vkEmojiStorage', function (emojiGroups, storage) {
+  'EmojiGroups', 'vkEmojiStorage', 'vkEmojiTransforms', function (emojiGroups, storage, vkEmojiTransforms) {
     var RECENT_LIMIT = 54;
+    var DEFAULT_OUTPUT_FORMAT = '';
     var templateUrl = 'templates/emoji-button-bootstrap.html';
 
     try {
@@ -1346,10 +1347,12 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
       scope: {
         model: '=emojiPicker',
         placement: '@',
-        title: '@'
+        title: '@',
+        onChangeFunc: '='
       },
       link: function ($scope, element, attrs) {
         var recentLimit = parseInt(attrs.recentLimit, 10) || RECENT_LIMIT;
+        var outputFormat = attrs.outputFormat || DEFAULT_OUTPUT_FORMAT;
 
         $scope.groups = emojiGroups.groups;
         $scope.selectedGroup = emojiGroups.groups[0];
@@ -1360,15 +1363,21 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
             $scope.model = '';
           }
 
-          $scope.model += [' :', emoji, ':'].join('');
+          $scope.model += formatSelectedEmoji(emoji, outputFormat);
           $scope.model = $scope.model.trim();
           storage.store(emoji);
+
+          fireOnChangeFunc();
         };
 
         $scope.remove = function () {
-          var words = $scope.model.split(' ');
-          words.pop();
-          $scope.model = words.join(' ').trim();
+          if (angular.isDefined($scope.model)) {
+            var words = $scope.model.split(' ');
+            words.pop();
+            $scope.model = words.join(' ').trim();
+
+            fireOnChangeFunc();
+          }
         };
 
         $scope.toClassName = function (emoji) {
@@ -1386,6 +1395,21 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         $scope.$on('$destroy', function () {
           element.remove();
         });
+
+        function formatSelectedEmoji(emoji, type) {
+          emoji = [' :', emoji, ':'].join('');
+          if (type == 'unicode') {
+            return vkEmojiTransforms.emojify(emoji);
+          } else {
+            return emoji;
+          }
+        }
+
+        function fireOnChangeFunc() {
+          if ($scope.onChangeFunc && typeof $scope.onChangeFunc === 'function') {
+            setTimeout($scope.onChangeFunc);
+          }
+        }
       }
     };
   }
@@ -1485,102 +1509,26 @@ angular.module('vkEmojiPicker').directive('emojiRemovable', function () {
 });
 
 angular.module('vkEmojiPicker').filter('emojify', [
-  '$filter', function ($filter) {
-    var hexify = $filter('hexify');
-    var unicodify = $filter('unicodify');
-
-    return function (input) {
-      return unicodify(hexify(input));
-    };
+  'vkEmojiTransforms', function (vkEmojiTransforms) {
+    return vkEmojiTransforms.emojify;
   }
 ]);
 
 angular.module('vkEmojiPicker').filter('hexify', [
-  'EmojiHex', function (EmojiHex) {
-    return function (text) {
-      if (text == null) {
-        return '';
-      }
-
-      var emojiRegex = /\:([a-z0-9_+-]+)(?:\[((?:[^\]]|\][^:])*\]?)\])?\:/g;
-      var matches = text.match(emojiRegex);
-
-      if (matches === null) {
-        return text;
-      }
-
-      for (var i = 0; i < matches.length; i++) {
-        var emojiString = matches[i];
-        var property = emojiString.replace(/\:/g, '');
-
-        if (EmojiHex.emoji.hasOwnProperty(property)) {
-          text = text.replace(emojiString, EmojiHex.emoji[property]);
-        }
-      }
-
-      return text;
-    };
+  'vkEmojiTransforms', function (vkEmojiTransforms) {
+    return vkEmojiTransforms.hexify;
   }
 ]);
 
 angular.module('vkEmojiPicker').filter('imagify', [
-  'EmojiGroups', function (EmojiGroups) {
-    var regex = new RegExp(':(' + EmojiGroups.all.join('|') + '):', 'g');
-
-    return function (input) {
-      if (input == null) {
-        return '';
-      }
-
-      return input.replace(regex, function (match, text) {
-        var className = text.replace(/_/g, '-');
-        var output = ['<i class="emoji-picker emoji-', className, '" alt="', text, '" title=":', text, ':"></i>'];
-
-        return output.join('');
-      });
-    };
+  'vkEmojiTransforms', function (vkEmojiTransforms) {
+    return vkEmojiTransforms.imagify;
   }
 ]);
 
 angular.module('vkEmojiPicker').filter('unicodify', [
-  'EmojiHex', function (EmojiHex) {
-    var swappedHex = {};
-    var unicodes = [];
-
-    angular.forEach(EmojiHex.emoji, function (value, key) {
-      swappedHex[value] = key;
-      unicodes.push(value);
-    });
-    unicodes = unicodes.reverse();
-    var regexHex = new RegExp('(' + unicodes.join('|') + ')', 'g');
-
-    return function (text) {
-      if (text == null) {
-        return '';
-      }
-
-      var matches = text.match(regexHex);
-
-      if (matches === null) {
-        return text;
-      }
-
-      for (var i = 0, len = matches.length; i < len; i++) {
-        var hexString = matches[i];
-
-        if (hexString.indexOf('-') > -1) {
-          var codePoints = hexString.split('-');
-          var unicode = eval('String.fromCodePoint(0x' + codePoints.join(', 0x') + ')');
-        } else {
-          var codePoint = ['0x', hexString].join('');
-          var unicode = String.fromCodePoint(codePoint);
-        }
-
-        text = text.replace(hexString, unicode);
-      }
-
-      return text;
-    };
+  'vkEmojiTransforms', function (vkEmojiTransforms) {
+    return vkEmojiTransforms.unicodify;
   }
 ]);
 
@@ -1705,6 +1653,13 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function () {
                 left: position.left - popoverWidth
               };
               break;
+            case 'right-relative':
+              offset = {
+                top: 12,
+                left: 24
+              };
+              break;
+            case 'top':
             default:
               offset = {
                 top: position.top - popoverHeight - position.height * 3,
@@ -1737,6 +1692,11 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function () {
         scope.placement = options.placement;
 
         scope.$hide = function () {
+          $popover.hide();
+        };
+
+        scope.emojiClicked = function (emoji) {
+          scope.append(emoji);
           $popover.hide();
         };
 
@@ -1844,5 +1804,102 @@ angular.module('vkEmojiPicker').factory('vkEmojiStorage', [
     };
 
     return factory;
+  }
+]);
+
+angular.module('vkEmojiPicker').factory('vkEmojiTransforms', [
+  'EmojiHex', 'EmojiGroups', function (EmojiHex, EmojiGroups) {
+    var transforms = {
+      hexify: hexify,
+      imagify: imagify,
+      unicodify: unicodify,
+      emojify: emojify
+    };
+
+    var regex = new RegExp(':(' + EmojiGroups.all.join('|') + '):', 'g');
+    var regexHex = new RegExp('(' + getUnicodes().join('|') + ')', 'g');
+
+    function getUnicodes() {
+      var swappedHex = {};
+      var unicodes = [];
+
+      angular.forEach(EmojiHex.emoji, function (value, key) {
+        swappedHex[value] = key;
+        unicodes.push(value);
+      });
+
+      return unicodes.reverse();
+    }
+
+    function hexify(text) {
+      if (text == null) {
+        return '';
+      }
+
+      var emojiRegex = /\:([a-z0-9_+-]+)(?:\[((?:[^\]]|\][^:])*\]?)\])?\:/g;
+      var matches = text.match(emojiRegex);
+
+      if (matches === null) {
+        return text;
+      }
+
+      for (var i = 0; i < matches.length; i++) {
+        var emojiString = matches[i];
+        var property = emojiString.replace(/\:/g, '');
+
+        if (EmojiHex.emoji.hasOwnProperty(property)) {
+          text = text.replace(emojiString, EmojiHex.emoji[property]);
+        }
+      }
+
+      return text;
+    }
+
+    function imagify(input) {
+      if (input == null) {
+        return '';
+      }
+
+      return input.replace(regex, function (match, text) {
+        var className = text.replace(/_/g, '-');
+        var output = ['<i class="emoji-picker emoji-', className, '" alt="', text, '" title=":', text, ':"></i>'];
+
+        return output.join('');
+      });
+    }
+
+    function unicodify(text) {
+      if (text == null) {
+        return '';
+      }
+
+      var matches = text.match(regexHex);
+
+      if (matches === null) {
+        return text;
+      }
+
+      for (var i = 0, len = matches.length; i < len; i++) {
+        var hexString = matches[i];
+
+        if (hexString.indexOf('-') > -1) {
+          var codePoints = hexString.split('-');
+          var unicode = eval('String.fromCodePoint(0x' + codePoints.join(', 0x') + ')');
+        } else {
+          var codePoint = ['0x', hexString].join('');
+          var unicode = String.fromCodePoint(codePoint);
+        }
+
+        text = text.replace(hexString, unicode);
+      }
+
+      return text;
+    }
+
+    function emojify(input) {
+      return unicodify(hexify(input));
+    }
+
+    return transforms;
   }
 ]);
