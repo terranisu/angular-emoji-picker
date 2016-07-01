@@ -31,4 +31,70 @@ describe('Emoji Picker directive', function () {
     $scope.$$childTail.append('smile');
     expect($scope.$$childTail.model).to.be.eql(':smile:');
   });
+
+  it('should remove emoji from the model', function () {
+    var element = angular.element(
+      '<span emoji-picker="message" placement="right" title="Emoji" recent-limit="12"></span>'
+    );
+    $compile(element)($scope);
+    $scope.$digest();
+    $scope.$$childTail.append('smile');
+    $scope.$$childTail.remove();
+    expect($scope.$$childTail.model).to.be.eql('');
+  });
+
+  it('should do nothing when calling remove() and the bound property is undefined', function () {
+    var element = angular.element(
+      '<span emoji-picker="message" placement="right" title="Emoji" recent-limit="12"></span>'
+    );
+    $compile(element)($scope);
+    $scope.$digest();
+    $scope.$$childTail.remove();
+    expect($scope.$$childTail.model).to.be.eql(undefined);
+  });
+
+  it('should insert the unicode emoji symbol when unicode format is specified', function () {
+    var element = angular.element(
+      '<span emoji-picker="message" placement="right" output-format="unicode" title="Emoji" recent-limit="12"></span>'
+    );
+    $compile(element)($scope);
+    $scope.$digest();
+    $scope.$$childTail.append('smile');
+    expect($scope.$$childTail.model).to.be.eql('😄');
+  });
+
+  it('should call onChangeFunc when the user picks an emoji', function () {
+    var callCounter = 0;
+    $scope.spyFunc = function() {
+      callCounter++;
+    };
+    var element = angular.element(
+      '<span emoji-picker="message" placement="right" title="Emoji" recent-limit="12" on-change-func="spyFunc"></span>'
+    );
+    $compile(element)($scope);
+    $scope.$digest();
+    $scope.$$childTail.append('smile');
+    
+    setTimeout(function() {
+      expect(callCounter).to.be.eql(1);
+    })
+  });
+
+  it('should call onChangeFunc when the user removes an emoji', function () {
+    var callCounter = 0;
+    $scope.spyFunc = function() {
+      callCounter++;
+    };
+    var element = angular.element(
+      '<span emoji-picker="message" placement="right" title="Emoji" recent-limit="12" on-change-func="spyFunc"></span>'
+    );
+    $compile(element)($scope);
+    $scope.$digest();
+    $scope.$$childTail.append('smile');
+    $scope.$$childTail.remove();
+    
+    setTimeout(function() {
+      expect(callCounter).to.be.eql(1);
+    })
+  });
 });

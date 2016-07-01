@@ -41,17 +41,17 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
           $scope.model = $scope.model.trim();
           storage.store(emoji);
 
-          if($scope.onChangeFunc && typeof $scope.onChangeFunc === 'function') {
-            setTimeout($scope.onChangeFunc);
-          }
+          fireOnChangeFunc();
         };
 
         $scope.remove = function () {
-	  if(angular.isDefined($scope.model)) {
-	    var words = $scope.model.split(' ');
+          if(angular.isDefined($scope.model)) {
+            var words = $scope.model.split(' ');
             words.pop();
             $scope.model = words.join(' ').trim();
-	  }
+
+            fireOnChangeFunc();
+          }
         };
 
         $scope.toClassName = function (emoji) {
@@ -76,6 +76,12 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
             return vkEmojiTransforms.emojify(emoji);
           } else {
             return emoji;
+          }
+        }
+
+        function fireOnChangeFunc() {
+          if($scope.onChangeFunc && typeof $scope.onChangeFunc === 'function') {
+            setTimeout($scope.onChangeFunc);
           }
         }
       }

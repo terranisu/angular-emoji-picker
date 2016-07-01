@@ -30,6 +30,43 @@ By default Emoji Picker uses its own popover, which, to be honest, has not a ver
 external dependencies: [Angular Strap](https://github.com/mgcrea/angular-strap), [Angular-UI Bootstrap](https://github.com/angular-ui/bootstrap)
 and [Bootstrap](https://github.com/twbs/bootstrap). In that case you have to include additional scripts on your page:
 
+### Emoji Picker Directive
+Add the `emoji-picker` attribute to an element to drop in the emoji button and picker in your template. Clicking the element will open a popover listing the available emoji for a user to select.
+
+#### Basic Example:
+```
+<input type="text" ng-model="keyword"/>
+<span emoji-picker="keyword" placement="right" title="Emoji"></span>
+```
+
+#### Full Example
+```
+<textarea ng-model="message" ng-change="messageUpdated()">{{message}}</textarea>
+<span emoji-picker="message"
+      placement="right" 
+      title="Emoji"
+      recent-limit="10"
+      output-format="unicode"
+      on-change-func="messageUpdated"></span>
+```
+
+#### Options:
+* **emoji-picker** - the bound property to which selected emoji should be added
+
+* **placement** (optional) - determines where the popover shows relative to the button element
+   
+  `top (default), bottom, left, right, right-relative`
+* **title** (optional) - the header text shown in the popover window
+
+* **recent-limit** (optional) - the number of recently-selected emoji to show in the popover window
+
+* **output-format** (optional) - the format to add selected emoji
+  
+  `alias (default), unicode`
+
+* **on-change-func** (optional) - a function to be called when the user selects or removes an emoji
+
+
 ### Angular Strap
 ```html
 <link rel="stylesheet" href="/path/to/bootstrap/dist/css/bootstrap.min.css">
