@@ -10,10 +10,10 @@ Installation
 ------------
 
 ### Bower
-The simplest way to install Emoji Picker is use [Bower](http://bower.io/).
+The simplest way to install Emoji Picker is use npm
 
 ```bash
-bower install angular-emoji-picker --save
+npm install angular-emoji-picker --save
 ```
 
 This will install the latest release.
@@ -24,6 +24,8 @@ You can also just download the contents of the `dist/` folder and add dependenci
 Usage
 -----
 ```javascript
+import 'angular-emoji-picker'
+
 angular.module('myModule', ['vkEmojiPicker']);
 ```
 By default Emoji Picker uses its own popover, which, to be honest, has not a very great realization. But you have an option - you can use
@@ -152,22 +154,3 @@ $ grunt
 The task compiles all source files.
 
 You can also run `grunt watch:dev` to have it rebuild on change.
-
-### Tests
-Unit tests are run with [karma](http://karma-runner.github.io) and written using
-[mocha](http://visionmedia.github.io/mocha/), [chai](http://chaijs.com/) and
-[sinon](http://sinonjs.org/)
-
-To run the tests:
-
-1. Install all dependencies via npm
-2. Install dependencies with bower.
-3. Install the karma cli
-4. Run the tests using karma or npm
-
-```bash
-$ npm install
-$ bower install
-$ sudo npm install -g karma-cli
-$ karma start karma.conf.js OR npm test
-```
