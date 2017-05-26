@@ -144,7 +144,7 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function () {
           popoverScope = $popover.$scope.$new();
           popoverElement = popoverLinker(popoverScope, function (clonedElement, scope) {});
 
-          element.after(popoverElement);
+          element.parent().parent().parent().parent().parent().find('emoji-container').append(popoverElement);
           $popover.$isShown = true;
           scope.$digest();
 

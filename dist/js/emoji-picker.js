@@ -1,25 +1,6 @@
-angular.module('templates-dist', ['templates/emoji-button-bootstrap.html', 'templates/emoji-button-strap.html', 'templates/emoji-button.html', 'templates/emoji-popover-bootstrap.html', 'templates/emoji-popover-strap.html', 'templates/emoji-popover.html']);
+angular.module('templates-dist', ['templates/emoji-button.html', 'templates/emoji-popover.html']);
 
-angular.module("templates/emoji-button-bootstrap.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("templates/emoji-button-bootstrap.html",
-    "<i class=\"emoji-picker emoji-smile\"\n" +
-    "   popover-template=\"'templates/emoji-popover-bootstrap.html'\"\n" +
-    "   popover-placement=\"{{ !placement && 'left' || placement }}\"\n" +
-    "   popover-title=\"{{ title }}\"></i>\n" +
-    "");
-}]);
-
-angular.module("templates/emoji-button-strap.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("templates/emoji-button-strap.html",
-    "<i class=\"emoji-picker emoji-smile\"\n" +
-    "   bs-popover\n" +
-    "   template=\"templates/emoji-popover-strap.html\"\n" +
-    "   placement=\"{{ !placement && 'left' || placement }}\"\n" +
-    "   title=\"{{ title }}\"></i>\n" +
-    "");
-}]);
-
-angular.module("templates/emoji-button.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-button.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-button.html",
     "<i class=\"emoji-picker emoji-smile\"\n" +
     "   emoji-popover template=\"templates/emoji-popover.html\"\n" +
@@ -28,54 +9,7 @@ angular.module("templates/emoji-button.html", []).run(["$templateCache", functio
     "");
 }]);
 
-angular.module("templates/emoji-popover-bootstrap.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("templates/emoji-popover-bootstrap.html",
-    "<div class=\"emoji-container\">\n" +
-    "  <div class=\"emoji-groups\">\n" +
-    "    <i class=\"emoji-group {{ ::group.icon.name }}\"\n" +
-    "       ng-class=\"(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : ''\"\n" +
-    "       ng-repeat=\"group in ::groups\"\n" +
-    "       ng-click=\"changeGroup(group)\">\n" +
-    "    </i>\n" +
-    "    <span class=\"btn-backspace\" ng-click=\"remove()\">&#x232B;</span>\n" +
-    "  </div>\n" +
-    "  <i class=\"emoji-picker emoji-{{ ::toClassName(emoji) }}\"\n" +
-    "     ng-repeat=\"emoji in selectedGroup.emoji\"\n" +
-    "     ng-click=\"append(emoji)\">\n" +
-    "  </i>\n" +
-    "</div>\n" +
-    "");
-}]);
-
-angular.module("templates/emoji-popover-strap.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("templates/emoji-popover-strap.html",
-    "<div class=\"popover\" tabindex=\"-1\">\n" +
-    "  <div class=\"arrow\"></div>\n" +
-    "  <div class=\"close-button-holder\">\n" +
-    "    <i class=\"close-button\" ng-click=\"$hide()\">&times;</i>\n" +
-    "  </div>\n" +
-    "  <h3 class=\"popover-title\" ng-bind-html=\"title\" ng-show=\"title\"></h3>\n" +
-    "  <div class=\"popover-content\">\n" +
-    "    <div class=\"emoji-container\">\n" +
-    "      <div class=\"emoji-groups\">\n" +
-    "        <i class=\"emoji-group {{ ::group.icon.name }}\"\n" +
-    "           ng-class=\"(group.icon.selected === selectedGroup.icon.selected) ? selectedGroup.icon.selected : ''\"\n" +
-    "           ng-repeat=\"group in ::groups\"\n" +
-    "           ng-click=\"changeGroup(group)\">\n" +
-    "        </i>\n" +
-    "        <span class=\"btn-backspace\" ng-click=\"remove()\">&#x232B;</span>\n" +
-    "      </div>\n" +
-    "      <i class=\"emoji-picker emoji-{{ ::toClassName(emoji) }}\"\n" +
-    "         ng-repeat=\"emoji in selectedGroup.emoji\"\n" +
-    "         ng-click=\"append(emoji)\">\n" +
-    "      </i>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "");
-}]);
-
-angular.module("templates/emoji-popover.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-popover.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-popover.html",
     "<div class=\"emoji-popover\" tabindex=\"-1\">\n" +
     "  <div class=\"close-button-holder\">\n" +
@@ -1728,7 +1662,7 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function () {
           popoverScope = $popover.$scope.$new();
           popoverElement = popoverLinker(popoverScope, function (clonedElement, scope) {});
 
-          element.after(popoverElement);
+          element.parent().parent().parent().parent().parent().find('emoji-container').append(popoverElement);
           $popover.$isShown = true;
           scope.$digest();
 
