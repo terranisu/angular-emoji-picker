@@ -2,7 +2,7 @@
   "name": "angular-emoji-picker",
   "version": "0.3.0",
   "description": "AngularJS Emoji picker",
-  "main": "Gruntfile.js",
+  "main": "dist/js/emoji-picker.js",
   "scripts": {
     "test": "karma start karma.conf.js"
   },
