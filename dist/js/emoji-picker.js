@@ -2,20 +2,13 @@ angular.module('templates-dist', ['templates/emoji-button.html', 'templates/emoj
 
 angular.module("templates/emoji-button.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-button.html",
-    "<i class=\"emoji-picker emoji-smile\"\n" +
-    "   emoji-popover template=\"templates/emoji-popover.html\"\n" +
-    "   placement=\"{{ ::placement }}\"\n" +
-    "   title=\"{{ ::title }}\"></i>\n" +
+    "<span emoji-popover template=\"templates/emoji-popover.html\"></span>\n" +
     "");
 }]);
 
 angular.module("templates/emoji-popover.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-popover.html",
     "<div class=\"emoji-popover\" tabindex=\"-1\">\n" +
-    "  <div class=\"close-button-holder\">\n" +
-    "    <i class=\"close-button\" ng-click=\"$hide()\">&times;</i>\n" +
-    "  </div>\n" +
-    "  <h3 class=\"emoji-popover-title\" ng-bind-html=\"title\" ng-show=\"title\"></h3>\n" +
     "  <div class=\"emoji-popover-content\">\n" +
     "    <div class=\"emoji-container\">\n" +
     "      <div class=\"emoji-groups\">\n" +
@@ -24,7 +17,6 @@ angular.module("templates/emoji-popover.html", []).run(["$templateCache", functi
     "           ng-repeat=\"group in ::groups\"\n" +
     "           ng-click=\"changeGroup(group)\">\n" +
     "        </i>\n" +
-    "        <span class=\"btn-backspace\" ng-click=\"remove()\">&#x232B;</span>\n" +
     "      </div>\n" +
     "      <i class=\"emoji-picker emoji-{{ ::toClassName(emoji) }}\"\n" +
     "         ng-repeat=\"emoji in selectedGroup.emoji\"\n" +
@@ -1357,9 +1349,6 @@ angular.module('vkEmojiPicker').directive('emojiPopover', [
         var config = {
           scope: $scope
         };
-
-        config.title = attrs.title || '';
-        config.placement = attrs.placement || 'top';
         config.template = attrs.template || 'templates/emoji-popover.html';
 
         var popover = $emojiPopover(element, config);
@@ -1551,92 +1540,11 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function () {
             return response.data;
           });
         };
+		
+		scope.emojiClicked = function (emoji) {
+		  scope.append(emoji);
+		};
 
-        var applyPlacement = function (parentElement, popoverElement) {
-          var elem = parentElement[0];
-          var clientRect = elem.getBoundingClientRect();
-          var popoverWidth = popoverElement.prop('offsetWidth');
-          var popoverHeight = popoverElement.prop('offsetHeight');
-          var offset = getPopoverOffset(options.placement, clientRect, popoverWidth, popoverHeight);
-
-          popoverElement.css({
-            top: offset.top + 'px',
-            left: offset.left + 'px'
-          });
-        };
-
-        var getPopoverOffset = function (placement, position, popoverWidth, popoverHeight) {
-          var offset;
-
-          switch (placement) {
-            case 'right':
-              offset = {
-                top: position.top - popoverHeight / 4,
-                left: position.left + position.width
-              };
-              break;
-            case 'bottom':
-              offset = {
-                top: position.top - position.height * 2,
-                left: position.left
-              };
-              break;
-            case 'left':
-              offset = {
-                top: position.top - popoverHeight / 4,
-                left: position.left - popoverWidth
-              };
-              break;
-            case 'right-relative':
-              offset = {
-                top: 12,
-                left: 24
-              };
-              break;
-            case 'top':
-            default:
-              offset = {
-                top: position.top - popoverHeight - position.height * 3,
-                left: position.left
-              };
-              break;
-          }
-
-          return offset;
-        };
-
-        var destroyPopoverElement = function (scope, element) {
-          if (scope) {
-            scope.$destroy();
-            scope = null;
-          }
-
-          if (element) {
-            element.remove();
-            element = null;
-          }
-        };
-
-        // Public scope interface
-
-        if (options.title) {
-          scope.title = $sce.trustAsHtml(options.title);
-        }
-
-        scope.placement = options.placement;
-
-        scope.$hide = function () {
-          $popover.hide();
-        };
-
-        scope.emojiClicked = function (emoji) {
-          scope.append(emoji);
-          $popover.hide();
-        };
-
-        // Public popover interface
-
-        $popover.$isShown = false;
         $popover.$promise = loadTemplate(options.template);
         $popover.$promise.then(function (template) {
           if (angular.isObject(template)) {
@@ -1645,49 +1553,20 @@ angular.module('vkEmojiPicker').provider('$emojiPopover', function () {
 
           popoverTemplate = template;
           popoverLinker = $compile(template);
-          element.on('click', $popover.toggle);
+		  
+	      // Public scope interface
+
+
+		  // Fetch a cloned element linked from template
+		  popoverScope = $popover.$scope.$new();
+		  popoverElement = popoverLinker(popoverScope, function (clonedElement, scope) {});
+
+		  element.after(popoverElement);
+
+		  popoverElement.addClass(options.placement);
+		  $popover.$isShown = true;
         });
 
-        $popover.show = function () {
-          if ($popover.$isShown) {
-            return;
-          }
-
-          // Hide any existing popoverElement
-          if (popoverScope && popoverElement) {
-            destroyPopoverElement(popoverScope, popoverElement);
-          }
-
-          // Fetch a cloned element linked from template
-          popoverScope = $popover.$scope.$new();
-          popoverElement = popoverLinker(popoverScope, function (clonedElement, scope) {});
-
-          element.parent().parent().parent().parent().parent().find('emoji-container').append(popoverElement);
-          $popover.$isShown = true;
-          scope.$digest();
-
-          popoverElement.addClass(options.placement);
-          applyPlacement(element, popoverElement);
-        };
-
-        $popover.hide = function () {
-          if (!$popover.$isShown) {
-            return;
-          }
-
-          destroyPopoverElement(popoverScope, popoverElement);
-          $popover.$isShown = false;
-        };
-
-        $popover.toggle = function () {
-          $popover.$isShown ? $popover.hide() : $popover.show();
-        };
-
-        $popover.destroy = function () {
-          element.off('click', $popover.toggle);
-          destroyPopoverElement(popoverScope, popoverElement);
-          scope.$destroy();
-        };
 
         return $popover;
       }

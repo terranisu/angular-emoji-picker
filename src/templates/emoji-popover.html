@@ -1,8 +1,4 @@
 <div class="emoji-popover" tabindex="-1">
-  <div class="close-button-holder">
-    <i class="close-button" ng-click="$hide()">&times;</i>
-  </div>
-  <h3 class="emoji-popover-title" ng-bind-html="title" ng-show="title"></h3>
   <div class="emoji-popover-content">
     <div class="emoji-container">
       <div class="emoji-groups">
@@ -11,7 +7,6 @@
            ng-repeat="group in ::groups"
            ng-click="changeGroup(group)">
         </i>
-        <span class="btn-backspace" ng-click="remove()">&#x232B;</span>
       </div>
       <i class="emoji-picker emoji-{{ ::toClassName(emoji) }}"
          ng-repeat="emoji in selectedGroup.emoji"

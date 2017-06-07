@@ -6,9 +6,6 @@ angular.module('vkEmojiPicker').directive('emojiPopover', [
         var config = {
           scope: $scope
         };
-
-        config.title = attrs.title || '';
-        config.placement = attrs.placement || 'top';
         config.template = attrs.template || 'templates/emoji-popover.html';
 
         var popover = $emojiPopover(element, config);
