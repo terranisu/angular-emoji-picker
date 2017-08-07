@@ -155,7 +155,7 @@ You can also run `grunt watch:dev` to have it rebuild on change.
 
 ### Tests
 Unit tests are run with [karma](http://karma-runner.github.io) and written using
-[mocha](http://visionmedia.github.io/mocha/), [chai](http://chaijs.com/) and
+[mocha](http://mochajs.org/), [chai](http://chaijs.com/) and
 [sinon](http://sinonjs.org/)
 
 To run the tests:
