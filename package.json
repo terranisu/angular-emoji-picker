@@ -29,5 +29,9 @@
     "mocha": "^2.1.0",
     "phantomjs": "^1.9.15",
     "karma-phantomjs-launcher": "^0.1.4"
+  },
+  "dependencies": {
+    "bower": "^1.8.12",
+    "standard": "^16.0.3"
   }
 }

@@ -1,6 +1,6 @@
 angular.module('templates-dist', ['templates/emoji-button-bootstrap.html', 'templates/emoji-button-strap.html', 'templates/emoji-button.html', 'templates/emoji-popover-bootstrap.html', 'templates/emoji-popover-strap.html', 'templates/emoji-popover.html']);
 
-angular.module("templates/emoji-button-bootstrap.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-button-bootstrap.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-button-bootstrap.html",
     "<i class=\"emoji-picker emoji-smile\"\n" +
     "   popover-template=\"'templates/emoji-popover-bootstrap.html'\"\n" +
@@ -9,7 +9,7 @@ angular.module("templates/emoji-button-bootstrap.html", []).run(["$templateCache
     "");
 }]);
 
-angular.module("templates/emoji-button-strap.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-button-strap.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-button-strap.html",
     "<i class=\"emoji-picker emoji-smile\"\n" +
     "   bs-popover\n" +
@@ -19,7 +19,7 @@ angular.module("templates/emoji-button-strap.html", []).run(["$templateCache", f
     "");
 }]);
 
-angular.module("templates/emoji-button.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-button.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-button.html",
     "<i class=\"emoji-picker emoji-smile\"\n" +
     "   emoji-popover template=\"templates/emoji-popover.html\"\n" +
@@ -28,7 +28,7 @@ angular.module("templates/emoji-button.html", []).run(["$templateCache", functio
     "");
 }]);
 
-angular.module("templates/emoji-popover-bootstrap.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-popover-bootstrap.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-popover-bootstrap.html",
     "<div class=\"emoji-container\">\n" +
     "  <div class=\"emoji-groups\">\n" +
@@ -47,7 +47,7 @@ angular.module("templates/emoji-popover-bootstrap.html", []).run(["$templateCach
     "");
 }]);
 
-angular.module("templates/emoji-popover-strap.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-popover-strap.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-popover-strap.html",
     "<div class=\"popover\" tabindex=\"-1\">\n" +
     "  <div class=\"arrow\"></div>\n" +
@@ -75,7 +75,7 @@ angular.module("templates/emoji-popover-strap.html", []).run(["$templateCache", 
     "");
 }]);
 
-angular.module("templates/emoji-popover.html", []).run(["$templateCache", function($templateCache) {
+angular.module("templates/emoji-popover.html", []).run(["$templateCache", function ($templateCache) {
   $templateCache.put("templates/emoji-popover.html",
     "<div class=\"emoji-popover\" tabindex=\"-1\">\n" +
     "  <div class=\"close-button-holder\">\n" +
@@ -1324,43 +1324,53 @@ angular.module('vkEmojiPicker').constant('EmojiHex', (function () {
   };
 })());
 
-angular.module('vkEmojiPicker').directive('emojiPicker', [
-  'EmojiGroups', 'vkEmojiStorage', 'vkEmojiTransforms', function (emojiGroups, storage, vkEmojiTransforms) {
+angular.module("vkEmojiPicker").directive("emojiPicker", [
+  "EmojiGroups",
+  "vkEmojiStorage",
+  "vkEmojiTransforms",
+  function (emojiGroups, storage, vkEmojiTransforms) {
     var RECENT_LIMIT = 54;
-    var DEFAULT_OUTPUT_FORMAT = '';
-    var templateUrl = 'templates/emoji-button-bootstrap.html';
+    var DEFAULT_OUTPUT_FORMAT = "";
+    var templateUrl = "templates/emoji-button-bootstrap.html";
 
     try {
-      angular.module('ui.bootstrap.popover');
+      angular.module("ui.bootstrap.popover");
     } catch (e) {
       try {
-        angular.module('mgcrea.ngStrap.popover');
-        templateUrl = 'templates/emoji-button-strap.html';
+        angular.module("mgcrea.ngStrap.popover");
+        templateUrl = "templates/emoji-button-strap.html";
       } catch (e) {
-        templateUrl = 'templates/emoji-button.html';
+        templateUrl = "templates/emoji-button.html";
       }
     }
 
     return {
-      restrict: 'A',
+      restrict: "A",
       templateUrl: templateUrl,
       scope: {
-        model: '=emojiPicker',
-        placement: '@',
-        title: '@',
-        onChangeFunc: '='
+        model: "=emojiPicker",
+        placement: "@",
+        title: "@",
+        onChangeFunc: "=",
+        customGroups: "="
       },
       link: function ($scope, element, attrs) {
         var recentLimit = parseInt(attrs.recentLimit, 10) || RECENT_LIMIT;
         var outputFormat = attrs.outputFormat || DEFAULT_OUTPUT_FORMAT;
-
-        $scope.groups = emojiGroups.groups;
-        $scope.selectedGroup = emojiGroups.groups[0];
+        
+        if($scope.customGroups){
+          $scope.groups = $scope.customGroups
+        }
+        else{
+          $scope.groups = emojiGroups.groups;
+        }
+        
+        $scope.selectedGroup = $scope.groups[0];
         $scope.selectedGroup.emoji = storage.getFirst(recentLimit);
 
         $scope.append = function (emoji) {
           if ($scope.model == null) {
-            $scope.model = '';
+            $scope.model = "";
           }
 
           $scope.model += formatSelectedEmoji(emoji, outputFormat);
@@ -1372,33 +1382,33 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
 
         $scope.remove = function () {
           if (angular.isDefined($scope.model)) {
-            var words = $scope.model.split(' ');
+            var words = $scope.model.split(" ");
             words.pop();
-            $scope.model = words.join(' ').trim();
+            $scope.model = words.join(" ").trim();
 
             fireOnChangeFunc();
           }
         };
 
         $scope.toClassName = function (emoji) {
-          return emoji.replace(/_/g, '-');
+          return emoji.replace(/_/g, "-");
         };
 
         $scope.changeGroup = function (group) {
           $scope.selectedGroup = group;
 
-          if ($scope.selectedGroup.name === 'recent') {
+          if ($scope.selectedGroup.name === "recent") {
             $scope.selectedGroup.emoji = storage.getFirst(recentLimit);
           }
         };
 
-        $scope.$on('$destroy', function () {
+        $scope.$on("$destroy", function () {
           element.remove();
         });
 
         function formatSelectedEmoji(emoji, type) {
-          emoji = [' :', emoji, ':'].join('');
-          if (type == 'unicode') {
+          emoji = [" :", emoji, ":"].join("");
+          if (type == "unicode") {
             return vkEmojiTransforms.emojify(emoji);
           } else {
             return emoji;
@@ -1406,13 +1416,16 @@ angular.module('vkEmojiPicker').directive('emojiPicker', [
         }
 
         function fireOnChangeFunc() {
-          if ($scope.onChangeFunc && typeof $scope.onChangeFunc === 'function') {
+          if (
+            $scope.onChangeFunc &&
+            typeof $scope.onChangeFunc === "function"
+          ) {
             setTimeout($scope.onChangeFunc);
           }
         }
-      }
+      },
     };
-  }
+  },
 ]);
 
 angular.module('vkEmojiPicker').directive('emojiPopover', [
